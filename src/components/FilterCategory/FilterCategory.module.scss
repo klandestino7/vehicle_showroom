@@ -12,16 +12,17 @@
 
     min-width: 117px;
 
-    margin-inline: 5px;
+    // margin-inline: 5px;
 
     &:hover{
         background: black !important;
     }
 
-    &:nth-child(1)
-    {
-        margin-left:0;
-    }
+    cursor: pointer;
+    // &:nth-child(1)
+    // {
+    //     margin-left:0;
+    // }
 }
 
 
