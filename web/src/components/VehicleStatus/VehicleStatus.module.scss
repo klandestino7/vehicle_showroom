@@ -1,0 +1,62 @@
+.vehicleStatus 
+{
+    padding: 1.5vh 2vh;
+    display:flex;
+
+    // justify-content: space-between;
+    align-items: flex-start;
+
+}
+
+.item 
+{
+
+}
+
+.rowCenter
+{
+    display:flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.badge
+{
+    width: 39px;
+    height: 38px;
+    background-color: var(--red);
+    display:flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+.right 
+{
+    color: black;
+
+    padding-inline: 1vh;
+
+    display:flex;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    flex-direction: column;
+
+    margin-right:10px;
+
+    .number
+    {
+        font-size: 24px;
+        line-height: 24px;
+    }
+
+    .label{
+        line-height: 14px;
+        font-size: 14px;
+    }
+}

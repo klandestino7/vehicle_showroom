@@ -1,0 +1,53 @@
+@font-face {
+  font-family: "a_RubricaXtCn";
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+  src: url('./fonts/a_RubricaXtCn.ttf');
+}
+
+:root{
+  --global-app-background: #2f2f2f;
+
+  --yellow: #FFCC00;
+  --red: #FF0039;
+
+  --blue-light: #B7D5ED;
+
+  --black-background-20: #07080f2f;
+  --black-background-65: #07080F99;
+  --black-background-90: #07080FCC;
+
+  --primary-font: 'a_RubricaXtCn';
+  --secondary-font: 'a_RubricaXtCn';
+}
+
+body {
+  margin: 0;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+  text-decoration: none;
+  color:#a6a6a5;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.selected 
+{
+  background: red !important;
+}

@@ -1,0 +1,28 @@
+.searchBar
+{
+    display: flex;
+    background: var(--black-background-65);
+    
+    padding: 2vh;
+
+    margin: 2vh;
+}
+
+.searchBar input 
+{
+    background: transparent;
+    border: none;
+    color: white;
+
+    font-family: var(--primary-font);
+
+    text-transform: uppercase;
+
+    font-size: 2vh;
+
+    &:focus { outline: none; }
+
+    max-width: 453px;
+
+    width: 50vh;
+}

@@ -1,0 +1,16 @@
+[defaultmaps]/
+[testes]/
+artifacts/
+cfx-files/
+cache/
+db/
+resources/\[assets\]/\*.
+
+server.cfg
+start.bat
+
+icons-svg/
+
+.yarn
+node_modules
+resources/\[framework-scripts\]/\[smartphone\]/qs-smartphone/battery.json
