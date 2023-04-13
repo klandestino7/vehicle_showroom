@@ -104,7 +104,8 @@ const VehicleDetails = () =>
         <div 
             className={s.vehicleDetails}
             style={{
-                background: `url(./vehicles/${vehicleInfo?.image}.png)`
+                background: `url(./vehicles/${vehicleInfo?.image}.png)`,
+                opacity:  currentVehicle != -1 ? 1 : 0
             }}
         >
             <div 

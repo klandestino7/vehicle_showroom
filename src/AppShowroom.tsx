@@ -11,7 +11,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { DefaultRoutes } from "./constants/Routes";
 import MainPage from "./pages/Showroom/MainPage/MainPage";
 import SpecialOffers from "./pages/Showroom/SpecialOffers/SpecialOffers";
-import BackgroundBars from "./elements/BackgroundBars/BackgroundBars";
+import BackgroundBars from "./components/BackgroundBars/BackgroundBars";
 import { VehicleSelectedCtxProvider } from "./contexts/VehicleSelectedCtx";
 import ShowroomManagement from "./pages/Management/Showroom/Showroom";
 
