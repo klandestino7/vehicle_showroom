@@ -12,8 +12,8 @@ const ShowroomManagement = () =>
     return(
         <div className={s.showroomManagement}>
             <Header 
-                title={""}
-                enableNavBar={true}
+                title={"MANAGEMENT"}
+                enableNavBar={false}
             />
 
             <div className={s.container}>
