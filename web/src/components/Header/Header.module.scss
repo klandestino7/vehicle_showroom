@@ -1,0 +1,58 @@
+
+.root
+{
+    font-size: 8vh;
+    line-height: 8vh;
+
+    display:flex;
+
+    justify-content: flex-start;
+    align-items: center;
+
+    padding-inline: 4vh;
+}
+
+.title
+{
+    color: white;
+    padding:0;
+    margin:0;
+
+    display: flex;
+
+    div:nth-child(1)
+    {
+        margin-right: 3vh;
+    }
+}
+
+.firstWord {
+    color: var(--blue-light);
+}
+
+.toolbar
+{
+    position: absolute;
+    right: 2vw;
+
+    display:flex;
+
+    font-size: 1vh;
+
+    justify-content: center;
+    align-items: center;
+
+    top: 0;
+
+    .toolButton
+    {
+        opacity: .6;
+        padding: 1vh;
+        line-height: 0;
+
+        cursor: pointer;
+        &:hover{
+            opacity: 1;
+        }
+    }
+}

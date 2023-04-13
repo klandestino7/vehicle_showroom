@@ -1,0 +1,40 @@
+
+.bg
+{
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+}
+
+.topBar {
+    position: absolute;
+
+    top:-150px;
+    left:-150px;
+
+    width: 818px;
+    height: 818px;
+
+    background: url("./images/bars-top.svg");
+    background-size: 100%;
+
+    z-index: 0;
+}
+
+
+.bottomBar {
+    position: absolute;
+
+    bottom:-150px;
+    right:-150px;
+
+    width: 818px;
+    height: 818px;
+
+    background: url("./images/bars-bottom.svg");
+    background-size: 100%;
+
+    z-index: 0;
+}
+

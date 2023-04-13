@@ -1,0 +1,141 @@
+.vehicleCard 
+{
+    // max-width: 580px;
+    // max-height: 447px;
+
+    // height: fit-content;
+    // width: auto;
+
+    position: relative;
+
+    outline: 3px solid transparent;
+
+    background: var(--black-background-65);
+
+    display:grid;
+
+    grid-template-rows: .8fr 4fr 1fr;
+
+    &:hover{
+        background: var(--black-background-90);
+    }
+
+    cursor: pointer;
+}
+
+.vehicleImage
+{   
+    position: absolute;
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+
+    background-position: center top !important;
+    background-size: 90% auto !important;
+    background-repeat: no-repeat !important;
+
+    z-index: 1;
+}
+
+
+.vehicleCard .header 
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 2;
+
+    .id 
+    {
+        background: var(--black-background-90);
+        max-width: 58px;
+        max-height: 58px;
+
+        font-size: 3vh;
+        line-height: 2vh;
+        color: white;
+
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        padding: .5vh 2vh;
+        clip-path: polygon(0% 0px, 100% 0px, 100% 93%, 0% 100%);
+    }
+
+    .price
+    {
+        font-size: 3vh;
+        line-height: 2vh;
+        color: black;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 .5vh;
+
+        .oldPrice
+        {
+            color: rgba(0,0,0,0.6);
+            font-size: 2.5vh;
+            background: url("./images/offerLine.svg");
+            background-repeat: no-repeat;
+        }
+
+
+        & > span{
+            padding: 0vh 1vh;
+        }
+    }
+}
+
+.label 
+{
+    width: auto;
+    padding-inline: 2vh;
+    padding-block: 1vh;
+
+    text-transform: uppercase;
+    color:white;
+    background: var(--black-background-20);
+    font-size: 3vh;
+    
+    z-index: 2;
+}
+
+.imageSpacing
+{
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.offerPrice
+{
+    background: var(--yellow);
+}
+
+.normalPrice
+{
+    background: var(--blue-light);
+}
+
+.status
+{
+    background: white;
+}
+
+.selected 
+{
+    outline: 3px solid var(--blue-light);
+    background: var(--black-background-90);
+
+    .id{
+        background:var(--blue-light) !important;
+        color: var(--black-background-90) !important;
+    }
+}

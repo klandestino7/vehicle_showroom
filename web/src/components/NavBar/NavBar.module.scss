@@ -1,0 +1,38 @@
+.navBar
+{
+    font-size: 3.5vh;
+}
+
+.navBar .item
+{
+    margin: 15px;
+    color: white;
+    position: relative;
+}
+
+.selected 
+{
+    border-bottom: 3px solid var(--blue-light);
+}
+
+.tag
+{
+    position: absolute;
+    right: -2.3vh;
+    bottom: 2.5vh;
+
+    line-height: 2.5vh;
+    font-size: 2.5vh;
+    color: black;
+
+    text-align: center;
+
+    padding-inline: .5vh;
+    padding-block: .5vh;
+
+    background: var(--yellow);
+
+    height: fit-content;
+
+    z-index: 3;
+}

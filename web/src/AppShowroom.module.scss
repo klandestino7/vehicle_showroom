@@ -1,0 +1,48 @@
+*{
+    transition: all 0.2s;
+    user-select: none;
+
+    &::-webkit-scrollbar {
+		position: absolute;
+		width: 5px;
+		height: 5px;
+	}
+	&::-webkit-scrollbar-track {
+		background: var(--black-background-20);
+	}
+	&::-webkit-scrollbar-thumb {
+		background: var(--blue-light);
+		border-radius: 5px;
+	}
+	&::-webkit-scrollbar-thumb:hover {
+		background: var(--blue-light);
+	}
+}
+
+.root 
+{
+    font-family: var(--primary-font), sans-serif;
+
+    width: 100vw;
+    height: 100vh;
+
+    position: relative;
+
+    overflow:hidden;
+
+    color:#a6a6a5;
+
+    display:none;
+
+    justify-content: center;
+    align-items: center;
+
+    // background: red;
+
+    background: url("../images/symbols.svg");
+    background-size: 100%;
+}
+
+.active {
+    display:flex;
+}

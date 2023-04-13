@@ -1,0 +1,166 @@
+.vehicleDetails
+{
+    position: relative;
+
+    height: auto;
+
+    display: grid;
+
+    grid-template-columns: 3fr 1fr;
+
+    width: 100%;
+
+    min-height: 52vh;
+
+    // border: 1px yellow solid;
+
+    background-size: 60% !important;
+    background-repeat: no-repeat !important;
+    background-position: 8vw center !important;
+}
+
+.vehicleDetails .right
+{
+    display:flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    flex-direction: column;
+
+    padding: 2vh 6vh;
+
+    text-align: right;
+
+    max-width: 30vh;
+}
+
+
+.buttonsContainer 
+{
+    display:flex;
+
+    & > div{
+        display:flex;
+
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+
+        padding-block: 1vh;
+
+        padding-inline: 3vh;
+        white-space: nowrap;
+        color:white;
+        cursor: pointer;
+    }
+
+    .testDrive
+    {
+        clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+        padding-right: 4vh;
+        background: #2A343E;
+    }
+
+    .buyButton
+    {   
+        padding-left: 4vh;
+        clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+        background: var(--red);
+    }
+
+    .label{
+        font-size: 2vh;
+        opacity: .5;
+    }
+
+    .price{
+        font-size: 3vh;
+    }
+}
+
+
+.colorPicker{
+    
+    span 
+    {
+        font-size: 3vh;
+        text-transform: uppercase;
+
+        color: white;
+    }
+}
+
+.contentColors {
+    display:flex;
+    justify-content: center;
+    align-items: center;    
+    margin-top: 15px;
+    flex-wrap: wrap;
+    max-height: 25vh;
+
+    max-width: 12vw;
+    overflow: auto;
+}
+
+.contentColors .colorItem {
+    padding: 15px;
+    margin: 3px 3px;
+
+    &:hover{
+        outline: 1px solid var(--blue-light);
+    }
+}
+
+.contentColors .selected 
+{
+    outline: 1px solid var(--blue-light);
+}
+
+.vehicleDetailsCard
+{
+    position: absolute;
+
+    right: 18vw;
+
+    color: black;
+    text-transform: uppercase;
+
+
+    padding: 1vh;
+
+    width: fit-content;
+
+    h1{
+        padding-inline: 2vh;
+        line-height: 1vh;
+    }
+
+    background: white;
+
+    &::after{
+        content: "";
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        left:0;
+        bottom: -20px;
+        background: white;
+        clip-path: polygon(0 0, 0% 100%, 100% 50%);
+    }
+
+    .closePopup
+    {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color:red;
+        z-index: 100;
+    }
+}
+
+.none 
+{
+    display:none
+}
