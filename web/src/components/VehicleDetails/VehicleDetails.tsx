@@ -51,10 +51,7 @@ const ButtonsContainer : React.FC<ButtonsProps> = ({vehicleInfo}) => {
 
 
 const ColorPicker = () => {
-
-    const handleChangeColor = () =>{
-
-    }
+    const { setVehicleColor } = useVehicleSelectedCtx();
 
     return (
         <div className={s.colorPicker}>
@@ -68,7 +65,7 @@ const ColorPicker = () => {
                                 className={s.colorItem}
                                 data-tooltip={color.label}
                                 style={{background: color.hash}}
-                                onClick={handleChangeColor}
+                                onClick={() => setVehicleColor(color.index)}
                             >
                                 
                             </div>
@@ -104,7 +101,7 @@ const VehicleDetails = () =>
         <div 
             className={s.vehicleDetails}
             style={{
-                background: `url(./vehicles/${vehicleInfo?.image}.png)`,
+                // background: `url(./vehicles/${vehicleInfo?.image}.png)`,
                 opacity:  currentVehicle != -1 ? 1 : 0
             }}
         >

@@ -8,6 +8,8 @@ type VehicleSelectedCtxType = {
     setVehicleColor: (color: number) => void;
 }   
 
+import { vehiclesMock } from "@/constants/vehicles";
+
 export const VehicleSelectedCtx = createContext({} as VehicleSelectedCtxType);
 
 export const useVehicleSelectedCtx = () => useContext<any>(VehicleSelectedCtx);
@@ -20,7 +22,8 @@ export const VehicleSelectedCtxProvider = ({ children }: { children: React.React
 
     const setVehicle = (vehicle: any) =>{
         setCurrentVehicle(vehicle)
-        fetchApp('AppShowroom', 'SELECT_VEHICLE', {});
+        const vehicleData = vehiclesMock[vehicle]; 
+        fetchApp('AppShowroom', 'SELECT_VEHICLE', {vehicle: vehicleData});
     }
 
     const setVehicleColor = (color: number) =>

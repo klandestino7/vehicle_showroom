@@ -15,8 +15,6 @@ type ItemProps = {
 const Item = ({id, label, number} : ItemProps) => {
     const { currentCategory, setCategory } = useMainPageCtx();
 
-    console.log("ITEM", id, typeof id, id == currentCategory)
-
     return (
         <div className={`${s.item} ${id == currentCategory ? s.selected : "" }`} onClick={() => setCategory(id)}>
             {label}

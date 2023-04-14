@@ -36,6 +36,27 @@ export class UiApp
 
     on(name: string, params: any)
     {
-        return RegisterNuiCallback(`uiapp//${name}`,params)
+        return this.registerCallback(`uiapp//${name}`, params)
+    }
+
+    registerCallback(type: string, callback: Function)
+    {
+        RegisterNuiCallbackType(type);
+
+        const handler = (body: any, resultCallback: NUIResultCallback) =>
+        {
+            callback(body, resultCallback);
+        }
+
+        const eventName = `__cfx_nui:${type}`;
+
+        global.on(eventName, handler);
+
+        return {
+            eventName: eventName,
+            callback: handler,
+        };
     }
 }
+
+export type NUIResultCallback = (data: { [K: string]: any }) => void;

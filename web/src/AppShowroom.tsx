@@ -16,7 +16,8 @@ import { VehicleSelectedCtxProvider } from "./contexts/VehicleSelectedCtx";
 import ShowroomManagement from "./pages/Management/Showroom/Showroom";
 
 const AppShowroom = () => {
-    const [displayUi, setDisplayUi] = useState<boolean>(true);
+    const [displayUi, setDisplayUi] = useState<boolean>(false);
+    const [backgroundDisplay, setBackgroundDisplay] = useState<boolean>(true);
 
     const escPressed = useKeyPress('Escape');
 
@@ -32,9 +33,16 @@ const AppShowroom = () => {
         setDisplayUi(data);
     });
 
+    useNUIMessage<boolean>('AppShowroom/DisableBackground', (data) =>
+    {
+        setBackgroundDisplay(data);
+    });
+
     return (
         <VehicleSelectedCtxProvider>
-            <div className={`${s.root} ${ displayUi ? s.active : '' }`} >
+            <div className={`${s.root} ${ displayUi ? s.active : '' }`} 
+                style={{background: backgroundDisplay ? `url("./images/symbols.svg")` : "" }}
+            >
                 <BackgroundBars />
 
                 <Routes>

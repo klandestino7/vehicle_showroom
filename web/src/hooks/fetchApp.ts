@@ -2,7 +2,7 @@ import { IsEnvBrowser } from "../constants/IsEnvBrowser";
 
 export const fetchApp = async <R,>(uiApp: string, eventName: string, body?: any): Promise<R> =>
 {
-    // console.log(`fetchApp :: sending(${eventName}) to -> `, `https://${ IsEnvBrowser ? 'nui-script' : GetParentResourceName() }/uiapp//${uiApp}/${eventName}`);
+    console.log(`fetchApp :: sending(${eventName}) to -> `, `https://${ IsEnvBrowser ? 'nui-script' : GetParentResourceName() }/uiapp//${uiApp}/${eventName}`);
 
     const response = await fetch(`https://${ IsEnvBrowser ? 'nui-script' : GetParentResourceName() }/uiapp//${uiApp}/${eventName}`,
     {

@@ -2,6 +2,7 @@ import NavBar from "../NavBar/NavBar";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import s from "./Header.module.scss";
 import { Navigate, redirect, useNavigate, useRoutes } from "react-router-dom";
+import { fetchApp } from "@/hooks/fetchApp";
 
 type HeaderProps = {
     // firstWord: string;
@@ -29,6 +30,7 @@ const Toolbar = () => {
 
     const closeAllPage = () =>{
         navigate("/");
+        fetchApp('AppShowroom', 'CLOSE_INTERFACE');
     }
 
     const openDashboardPage = () =>{

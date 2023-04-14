@@ -1,3 +1,4 @@
+import { requestModel } from "./utils/nativeWrapper";
 import { Vec3 } from "./utils/vector3";
 
 export class Vehicle {
@@ -35,11 +36,15 @@ export class Vehicle {
         this.setRotation(rotation);
     }
 
-    create(model: string, position: Vec3, rotation: Vec3)
+    async create(model: string, position: Vec3, rotation: Vec3)
     {
         if (! this.entity )
         {
-            const entity = CreateVehicle(model, position.x, position.y, position.z, 0.0, false, true);
+            const hash = GetHashKey(model);
+
+            await requestModel(hash);
+
+            const entity = CreateVehicle(hash, position.x, position.y, position.z, 0.0, false, true);
             this.entity = entity;
         }
     }
