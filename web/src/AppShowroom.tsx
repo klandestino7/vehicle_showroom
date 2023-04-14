@@ -14,9 +14,10 @@ import SpecialOffers from "./pages/Showroom/SpecialOffers/SpecialOffers";
 import BackgroundBars from "./components/BackgroundBars/BackgroundBars";
 import { VehicleSelectedCtxProvider } from "./contexts/VehicleSelectedCtx";
 import ShowroomManagement from "./pages/Management/Showroom/Showroom";
+import { IsEnvBrowser } from "./constants/IsEnvBrowser";
 
 const AppShowroom = () => {
-    const [displayUi, setDisplayUi] = useState<boolean>(false);
+    const [displayUi, setDisplayUi] = useState<boolean>(IsEnvBrowser ? true : false);
     const [backgroundDisplay, setBackgroundDisplay] = useState<boolean>(true);
 
     const escPressed = useKeyPress('Escape');
