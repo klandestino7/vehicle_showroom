@@ -1,12 +1,17 @@
 fx_version 'bodacious'
 game 'gta5'
 
+lua54 "yes"
+
 client_scripts {
+    "lua-lib/orbitalcam/camera.lua",
+    "lua-lib/orbitalcam/controllable_orbitalcam.lua",
+    "lua-lib/orbitalcam/orbitalcam.lua",
+
     "dist/client.js"
 } 
 
 server_scripts {
-    "@oxmysql/lib/MySQL.lua",
     "dist/server.js"
 }
 

@@ -27,7 +27,7 @@ const client = {
 for (const context of [ 'client', 'server' ]) {
   esbuild.build({
     bundle: true,
-    entryPoints: [`${context}/${context}.ts`],
+    entryPoints: [`${context}/code/${context}.ts`],
     outfile: `dist/${context}.js`,
     watch: production ? false : {
       onRebuild: onRebuild(context),

@@ -1,1 +1,0 @@
-console.log("[vehicle_showroom] Client Resource Started");

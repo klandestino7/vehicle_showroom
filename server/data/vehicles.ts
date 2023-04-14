@@ -1,7 +1,8 @@
-import { VehicleCardProps } from "@/components/VehicleCard/VehicleCard"
+
+import { VehicleTypeNode } from "code/service/vehicle"
 import { eVehicleClass } from "./eClasses"
 
-export const vehiclesMock : VehicleCardProps[] =
+export const vehiclesMock : VehicleTypeNode[] =
 [
     {
         id: 1,

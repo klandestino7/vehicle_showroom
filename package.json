@@ -8,10 +8,15 @@
     "build": "node build.js --mode=production",
     "watch": "node build.js"
   },
+  "dependencies": {
+    "@citizenfx/protobufjs": "latest",
+    "glm-js": "^0.0.6-c"
+  },
   "devDependencies": {
     "@citizenfx/client": "latest",
     "@citizenfx/server": "latest",
-    "@types/node": "^16.3.1",
-    "esbuild": "^0.14.10"
+    "@types/node": "^16.18.23",
+    "esbuild": "^0.14.10",
+    "typescript": "^4.0.3"
   }
 }

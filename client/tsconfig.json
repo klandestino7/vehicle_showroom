@@ -8,7 +8,8 @@
       "es2021"
     ],
     "types": [
-      "@citizenfx/client"
+      "@citizenfx/client",
+      "@types/node"
     ],
     "moduleResolution": "node",
     "resolveJsonModule": true,
