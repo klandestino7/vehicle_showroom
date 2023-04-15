@@ -2,12 +2,17 @@ export var gOrbitalCamPreviewIsEnabled = false;
 
 export const startPreviewUsingOrbitalCam = async (entity: number) =>
 {
+    if ( gOrbitalCamPreviewIsEnabled ) { return; }
+
     global.exports.vehicle_showroom.startPreviewUsingOrbitalCam(entity)
     gOrbitalCamPreviewIsEnabled = true
 }
 
 export const stopPreviewUsingOrbitalCam = () => 
 {
-    global.exports.vehicle_showroom.stopPreviewUsingOrbitalCam()
-    gOrbitalCamPreviewIsEnabled = false
+    if ( gOrbitalCamPreviewIsEnabled ) 
+    {
+        global.exports.vehicle_showroom.stopPreviewUsingOrbitalCam()
+        gOrbitalCamPreviewIsEnabled = false
+    }
 }

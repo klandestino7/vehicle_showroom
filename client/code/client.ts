@@ -9,7 +9,7 @@ import "./camera";
 import "./commands";
 
 import { stopPreviewUsingOrbitalCam } from "./camera";
-import { currentVehicle } from "./events";
+import { currentVehicle, destroyEntity } from "./events";
 
 function onResourceStop(resource: string) {
     if (resource !== GetCurrentResourceName()) {
@@ -18,9 +18,10 @@ function onResourceStop(resource: string) {
 
     SetNuiFocus(false, false);
     SetNuiFocusKeepInput(false);
+    
     stopPreviewUsingOrbitalCam();
 
-    currentVehicle.destroy();
+    destroyEntity();
 }
 
 on('onResourceStop', onResourceStop);

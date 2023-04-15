@@ -25,10 +25,7 @@ onNet("showroom:client:enableUi", () => {
     gUiApp.openUiAppInterface()
 });
 
-
 uiAppOn("AppShowroom/SELECT_VEHICLE", (data: any) => {
-    // console.log("SELECT_VEHICLE :: ", data );
-
     const vehicle = data.body.vehicle;
 
     gUiApp.emit('AppShowroom/DisableBackground', false);
@@ -36,7 +33,7 @@ uiAppOn("AppShowroom/SELECT_VEHICLE", (data: any) => {
     const position = CONST_VEHICLE_POSITION;
     const rotation = CONST_VEHICLE_ROTATION;
 
-    destroyEntity()
+    destroyEntity();
 
     currentVehicle = new Vehicle(vehicle.model, position, rotation);
 
@@ -51,7 +48,6 @@ uiAppOn("AppShowroom/SELECT_VEHICLE", (data: any) => {
 });
 
 uiAppOn("AppShowroom/UPDATE_COLOR", (data: any) => {
-    console.log("UPDATE_COLOR :: ", data.body.color );
     const color  = data.body.color;
 
     if (currentVehicle.getEntity())
@@ -70,10 +66,9 @@ uiAppOn("AppShowroom/CLOSE_INTERFACE", () => {
     SetNuiFocus(false, false)
     
     stopPreviewUsingOrbitalCam()
-})
+});
 
-
-const destroyEntity = () =>
+export const destroyEntity = () =>
 {
     if (currentVehicle && currentVehicle.getEntity())
     {
