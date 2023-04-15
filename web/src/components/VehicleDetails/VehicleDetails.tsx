@@ -5,6 +5,8 @@ import { VehicleCardProps } from "../VehicleCard/VehicleCard";
 import { vehiclesMock } from "@/constants/vehicles";
 import { VehicleColorsMock } from "@/constants/colors";
 import VehicleStatus from "../VehicleStatus/VehicleStatus";
+import { IsEnvBrowser } from "@/constants/IsEnvBrowser";
+import { lang } from "@/constants/language";
 
 
 type ButtonsProps =
@@ -36,18 +38,17 @@ const ButtonsContainer : React.FC<ButtonsProps> = ({vehicleInfo}) => {
     return (
         <div className={s.buttonsContainer}>
             <div className={s.testDrive}>
-                <span className={s.label}>TEST DRIVE</span>
+                <span className={s.label}>{lang("test_drive")}</span>
                 <span className={s.price}>$159</span>
             </div>
 
             <div className={s.buyButton}> 
-                <span className={s.label}>BUY CAR</span>
+                <span className={s.label}>{lang("buy_car")}</span>
                 <span className={s.price}>${USDollar.format(getVehiclePrice())}</span>
             </div>
     </div>
     )
 }
-
 
 
 const ColorPicker = () => {
@@ -82,18 +83,21 @@ const VehicleDetails = () =>
     const { currentVehicle } = useVehicleSelectedCtx();
     const [ vehicleInfo, setVehicleInfo ] = useState<VehicleCardProps>();
 
-    const [ vehiclePopup, setVehiclePopup ] = useState(false);
+    const [ vehiclePopup, setVehiclePopup ] = useState(currentVehicle != -1);
 
     useEffect(() => {
         setVehicleInfo(vehiclesMock[currentVehicle - 1]);
-        setVehiclePopup(true)
+        setVehiclePopup(currentVehicle != -1)
     }, [currentVehicle])
 
-    const openVehiclePopup = () => {
+    const openVehiclePopup = (event: any) => {
 
-        if (! vehiclePopup )
+        if ( event.detail == 2) 
         {
-            setVehiclePopup(true)
+            if (! vehiclePopup )
+            {
+                setVehiclePopup(true)
+            }
         }
     }
 
@@ -101,7 +105,7 @@ const VehicleDetails = () =>
         <div 
             className={s.vehicleDetails}
             style={{
-                // background: `url(./vehicles/${vehicleInfo?.image}.png)`,
+                background: IsEnvBrowser ? `url(./vehicles/${vehicleInfo?.image}.png)` : "",
                 opacity:  currentVehicle != -1 ? 1 : 0
             }}
         >

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import s from "./NavBar.module.scss";
 import { DefaultRoutes } from "@/constants/Routes";
+import { lang } from "@/constants/language";
 
 type NavBarProps = {
     
@@ -16,7 +17,7 @@ const NavBar = () =>
                     isPending ? s.item : isActive ? `${s.item} ${s.selected}` : s.item
                 }
             >
-                MAIN PAGE
+                {lang("main_page")}
             </NavLink>
 
             <NavLink 
@@ -25,8 +26,10 @@ const NavBar = () =>
                     isPending ? s.item : isActive ? `${s.item} ${s.selected}` : s.item
                 }
             >
-                SPECIAL OFFERS
-                <span className={s.tag}>HOT</span>
+                {lang("special_offers")}
+                <span className={s.tag}>
+                    {lang("hot")}
+                </span>
             </NavLink>
         </div>
     )

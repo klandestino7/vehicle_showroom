@@ -6,7 +6,7 @@ import {fetchApp} from "./hooks/fetchApp";
 import { useNUIMessage } from "./utils/useNUIMessage";
 
 import s from './AppShowroom.module.scss';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
 import { DefaultRoutes } from "./constants/Routes";
 import MainPage from "./pages/Showroom/MainPage/MainPage";
@@ -20,7 +20,15 @@ const AppShowroom = () => {
     const [displayUi, setDisplayUi] = useState<boolean>(IsEnvBrowser ? true : false);
     const [backgroundDisplay, setBackgroundDisplay] = useState<boolean>(true);
 
+    const [ currentLocation, setCurrentLocation ] = useState("dsds");
+
+    const currentPath = useLocation();
+
     const escPressed = useKeyPress('Escape');
+
+    useEffect(() =>{
+        setCurrentLocation(currentPath.pathname);
+    },[currentPath]);
 
     useEffect(() =>{
         if (escPressed) {
@@ -42,14 +50,15 @@ const AppShowroom = () => {
     return (
         <VehicleSelectedCtxProvider>
             <div className={`${s.root} ${ displayUi ? s.active : '' }`} 
-                style={{background: backgroundDisplay ? `url("./images/symbols.svg")` : "" }}
+                style={{
+                    background: currentLocation == "/" ? backgroundDisplay ? `url("./images/symbols.svg")` : "" : `url("./images/symbols.svg")`
+                }}
             >
                 <BackgroundBars />
 
                 <Routes>
                     <Route path={DefaultRoutes.MainPage} element={ <MainPage /> } />
                     <Route path={DefaultRoutes.SpecialOffers} element={ <SpecialOffers /> } />
-
 
                     <Route path={DefaultRoutes.Showroom} element={ <ShowroomManagement /> }>
                             {/* <Route path='/management/showroom' element={ <SpecialOffers /> }>

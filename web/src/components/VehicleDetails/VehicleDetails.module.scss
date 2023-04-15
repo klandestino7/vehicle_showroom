@@ -40,6 +40,7 @@
 .buttonsContainer 
 {
     display:flex;
+    position: relative;
 
     & > div{
         display:flex;
@@ -68,6 +69,7 @@
         padding-left: 4vh;
         clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
         background: var(--red);
+
     }
 
     .label{
@@ -77,6 +79,19 @@
 
     .price{
         font-size: 3vh;
+    }
+
+    &::before
+    {
+        content: "";
+        padding-inline: 3vh;
+        padding-block: 1vh;
+        position: absolute;
+        right: 3vh;
+        top: 3vh;
+        
+        background: var(--red);
+        box-shadow: 0px 0px 20px 30px var(--red);
     }
 }
 

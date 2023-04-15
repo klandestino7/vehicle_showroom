@@ -2,6 +2,7 @@ import { eVehicleClass } from "@/constants/eClasses";
 import s from "./VehicleCard.module.scss";
 import VehicleStatus from "@/components/VehicleStatus/VehicleStatus";
 import { useVehicleSelectedCtx } from "@/contexts/VehicleSelectedCtx";
+import { useNavigate } from "react-router-dom";
 
 export type VehicleCardProps = {
     id: number;
@@ -42,9 +43,20 @@ const VehicleCard : React.FC<VehicleCardProps> = ({
     let USDollar = new Intl.NumberFormat('en-US');
 
     const { setVehicle, currentVehicle } = useVehicleSelectedCtx()
+    const navigate = useNavigate();
+
+    const handleClick = (event: any, index: number) =>{
+
+        setVehicle(index);
+
+        if ( event.detail == 2)
+        {
+            navigate("/");
+        }
+    }
 
     return(
-        <div className={`${s.vehicleCard} ${currentVehicle == id ? s.selected : ""}`} onClick={() => setVehicle(id)}>
+        <div className={`${s.vehicleCard} ${currentVehicle == id ? s.selected : ""}`} onClick={(event) => handleClick(event, id)}>
             <div className={s.vehicleImage}
                 style={{background: `url(./vehicles/${image}.png)`}}
             ></div>
