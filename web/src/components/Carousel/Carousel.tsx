@@ -1,6 +1,6 @@
 import { useMainPageCtx } from "@/contexts/MainPageCtx";
 import s from "./Carousel.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { eVehicleClass, eVehicleClassLabel } from "@/constants/eClasses";
 import { categoriesMock } from "@/constants/categories";
 import { vehiclesMock } from "@/constants/vehicles";
@@ -10,29 +10,26 @@ type VehiclesProps = {
     currentClass: eVehicleClass;
 }
 
-const Vehicles : React.FC<VehiclesProps> = ({currentClass}) => {
-    const generateVehicleArray = () : VehicleCardProps[] =>
-    {
-        if (currentClass == eVehicleClass.all)
-        {
+const Vehicles: React.FC<VehiclesProps> = ({ currentClass }) => {
+    const generateVehicleArray = (): VehicleCardProps[] => {
+        if (currentClass == eVehicleClass.all) {
             return vehiclesMock;
         }
 
-        let array : VehicleCardProps[] = [];
+        let array: VehicleCardProps[] = [];
 
-        vehiclesMock.map(vehicle =>{
-            if (vehicle.class == currentClass)
-            {
+        vehiclesMock.map(vehicle => {
+            if (vehicle.class == currentClass) {
                 array.push(vehicle);
             }
         })
 
         return array;
     }
-    
+
     return (
         <>
-            {generateVehicleArray().map(item => <VehicleCard 
+            {generateVehicleArray().map(item => <VehicleCard
                 {...item}
                 showVehicleStatus={false}
             />)}
@@ -41,11 +38,11 @@ const Vehicles : React.FC<VehiclesProps> = ({currentClass}) => {
 }
 
 
-const Carousel = () => 
-{
+const Carousel = () => {
+    const ref = useRef(null);
     const { currentCategory } = useMainPageCtx();
-    const [ categoryLabel, setCategoryLabel ] = useState<string>("");
-    const [ vehicles, setVehicles ] = useState<number>(0);
+    const [categoryLabel, setCategoryLabel] = useState<string>("");
+    const [vehicles, setVehicles] = useState<number>(0);
 
     const getVehicleAmountFromCategory = () => {
         let amount = 0
@@ -59,9 +56,27 @@ const Carousel = () =>
     }
 
     useEffect(() => {
+        const element : any = ref.current;
+
+        const handleSmooth = (event: any) => {
+            event.preventDefault();
+
+            element.scrollBy({
+                left: event.deltaY < 0 ? -40 : 40,
+            });
+        };
+
+        element.addEventListener('wheel', handleSmooth);
+
+        return () => {
+            element.removeEventListener('wheel', handleSmooth);
+        };
+    }, []);
+
+    useEffect(() => {
         setCategoryLabel(eVehicleClassLabel[currentCategory]);
         setVehicles(getVehicleAmountFromCategory())
-    }, [currentCategory])
+    }, [currentCategory]);
 
     return (
         <div className={s.carousel}>
@@ -74,7 +89,7 @@ const Carousel = () =>
                 </div>
             </div>
 
-            <div className={s.container}>
+            <div className={s.container} ref={ref}>
                 <div className={s.carouselGrid}>
                     <Vehicles currentClass={currentCategory} />
                 </div>
