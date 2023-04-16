@@ -4,26 +4,52 @@ import { Vehicle } from "./vehicle";
 import { gOrbitalCamPreviewIsEnabled, startPreviewUsingOrbitalCam, stopPreviewUsingOrbitalCam } from "./camera";
 import { uiAppOn } from "./utils";
 import { setManagedTick } from "./utils/tick";
+import { VehicleType } from "types/vehicle";
+import { eVehicleClass, eVehicleClassLabel } from "types/category";
 
-var gVehicleNode = [];
-var gCategoryNode = [];
+var gVehicleNode : any = [];
+var gCategoryNode : Category[];
 
 export var currentVehicle : Vehicle = null;
 
-onNet("showroom:client:getVehicleList", (categoryNode: any) => {
-    gCategoryNode = categoryNode;
-    gUiApp.emit("AppShowroom/ReceiveCategoryNode", categoryNode);
-});
-
 onNet("showroom:client:getVehicleList", (vehicleNode: any) => {
     gVehicleNode = vehicleNode;
+
     gUiApp.emit("AppShowroom/ReceiveVehicleNode", vehicleNode);
+
+    gVehicleNode.map(( vehicle: VehicleType )=> {
+
+        gCategoryNode.find(category => {
+            if(category.id == vehicle.category)
+            {
+                category.addLength(1);
+            } 
+            else
+            {
+                gCategoryNode.push(
+                    new Category(
+                        vehicle.category,
+                        eVehicleClassLabel[vehicle.category],
+                        1,
+                    )
+                )
+            }
+        });
+
+    });
 });
 
 onNet("showroom:client:enableUi", () => {
     SetNuiFocus(true, true);
-    gUiApp.openUiAppInterface()
+    gUiApp.openUiAppInterface();
+
+    gUiApp.emit("AppShowroom/UpdateVehicleNode", gVehicleNode);
+    gUiApp.emit("AppShowroom/UpdateCategoryNode", gCategoryNode);
 });
+
+onNet("showroom:client:successBoughtVehicle", (netId: number) =>{
+
+})
 
 uiAppOn("AppShowroom/SELECT_VEHICLE", (data: any) => {
     const vehicle = data.body.vehicle;
@@ -67,6 +93,12 @@ uiAppOn("AppShowroom/CLOSE_INTERFACE", () => {
     
     stopPreviewUsingOrbitalCam()
 });
+
+uiAppOn("AppShowroom/TRY_BUY_VEHICLE", (data: any) => {
+    const vehicleId = data.body.vehicleId;
+
+    emitNet("showroom:server:tryBuyVehicle", vehicleId, currentVehicle.primaryColor, currentVehicle.secondaryColor)
+})
 
 export const destroyEntity = () =>
 {

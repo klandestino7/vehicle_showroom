@@ -6,8 +6,8 @@ export class Vehicle {
 
     protected readonly model: string;
     protected plate: string;
-    protected primaryColor: number;
-    protected secondaryColor: number;
+    public primaryColor: number;
+    public secondaryColor: number;
 
     public position: Vec3;
     public rotation: Vec3;
