@@ -9,13 +9,15 @@ import { lang } from "@/constants/language";
 import { useAppContext } from "@/contexts/AppContext";
 import { fetchApp } from "@/hooks/fetchApp";
 
+import { VehicleType } from "@/contexts/AppContext";
+
 
 type ButtonsProps =
 {
-    vehicleInfo : any
+    vehicle : VehicleType | any
 }
 
-const ButtonsContainer : React.FC<ButtonsProps> = ({vehicleInfo}) => {
+const ButtonsContainer : React.FC<ButtonsProps> = ({vehicle}) => {
     let USDollar = new Intl.NumberFormat('en-US');
     const { currentVehicle } = useVehicleSelectedCtx();
 
@@ -23,17 +25,17 @@ const ButtonsContainer : React.FC<ButtonsProps> = ({vehicleInfo}) => {
     const getVehiclePrice = () : number => {
         let price = 0;
 
-        if(!vehicleInfo) {
+        if(!vehicle) {
             return price
         }
 
-        if (vehicleInfo?.priceOffer && vehicleInfo?.priceOffer != 0)
+        if (vehicle?.offerPrice && vehicle?.offerPrice != 0)
         {
-            price = vehicleInfo?.priceOffer
+            price = vehicle?.offerPrice
         }
-        else if (vehicleInfo?.price)
+        else if (vehicle?.basePrice)
         {
-            price = vehicleInfo?.price
+            price = vehicle?.basePrice
         }
         return price
     }
@@ -92,14 +94,14 @@ const ColorPicker = () => {
 const VehicleDetails = () => 
 {
     const { currentVehicle } = useVehicleSelectedCtx();
-    const [ vehicleInfo, setVehicleInfo ] = useState<VehicleCardProps>();
+    const [ vehicleNode, setVehicleNode ] = useState<VehicleCardProps>();
     
     const { vehicles } = useAppContext();
 
     const [ vehiclePopup, setVehiclePopup ] = useState(currentVehicle != -1);
 
     useEffect(() => {
-        setVehicleInfo(vehicles[currentVehicle - 1]);
+        setVehicleNode(vehicles[currentVehicle - 1]);
         setVehiclePopup(currentVehicle != -1)
     }, [currentVehicle])
 
@@ -118,7 +120,7 @@ const VehicleDetails = () =>
         <div 
             className={s.vehicleDetails}
             style={{
-                background: IsEnvBrowser ? `url(./vehicles/${vehicleInfo?.image}.png)` : "",
+                background: IsEnvBrowser ? `url(./vehicles/${vehicleNode?.image}.png)` : "",
                 opacity:  currentVehicle != -1 ? 1 : 0
             }}
         >
@@ -127,17 +129,17 @@ const VehicleDetails = () =>
                 onClick={openVehiclePopup}
             >
                 {
-                    vehicleInfo
+                    vehicleNode
                     ?
                         <div className={`${ vehiclePopup ? s.vehicleDetailsCard : s.none}`}>  
                             <h1 className={s.vehicleName}>
-                                {vehicleInfo.label}
+                                {vehicleNode.label}
                             </h1>
                             <VehicleStatus
-                                maxSpeed={vehicleInfo.maxSpeed ?? 0}
-                                acceleration={vehicleInfo.acceleration ?? 0}
-                                braking={vehicleInfo.braking ?? 0}
-                                handling={vehicleInfo.handling ?? 0}
+                                maxSpeed={vehicleNode.maxSpeed ?? 0}
+                                acceleration={vehicleNode.acceleration ?? 0}
+                                braking={vehicleNode.braking ?? 0}
+                                handling={vehicleNode.handling ?? 0}
                             />
                             <div className={s.closePopup} onClick={() => setVehiclePopup(false)}>X</div>
 
@@ -152,7 +154,7 @@ const VehicleDetails = () =>
                 <ColorPicker />
 
                 <ButtonsContainer 
-                    vehicleInfo = {vehicleInfo}
+                    vehicle = {vehicleNode}
                 />
             </div>
         </div>
