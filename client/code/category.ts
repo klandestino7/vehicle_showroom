@@ -1,6 +1,6 @@
 
 
-class Category {
+export class Category {
     public id : number;
     public label : string;
     public length : number;

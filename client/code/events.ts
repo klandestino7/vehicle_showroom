@@ -6,9 +6,10 @@ import { uiAppOn } from "./utils";
 import { setManagedTick } from "./utils/tick";
 import { VehicleType } from "types/vehicle";
 import { eVehicleClass, eVehicleClassLabel } from "types/category";
+import { Category } from "./category";
 
-var gVehicleNode : any = [];
-var gCategoryNode : Category[];
+var gVehicleNode : any = [] = [];
+var gCategoryNode : Category[] = [];
 
 export var currentVehicle : Vehicle = null;
 
@@ -17,27 +18,40 @@ onNet("showroom:client:getVehicleList", (vehicleNode: any) => {
 
     gUiApp.emit("AppShowroom/ReceiveVehicleNode", vehicleNode);
 
-    gVehicleNode.map(( vehicle: VehicleType )=> {
+    formatCategoryNodeToInterface()
+});
+
+const formatCategoryNodeToInterface = () =>
+{
+    gCategoryNode.push( new Category(
+        eVehicleClass.all,
+        eVehicleClassLabel[-1],
+        gVehicleNode.length,
+    ) );
+
+    gVehicleNode.map(( vehicle: VehicleType ) => {
+        var haveCategory = false;
 
         gCategoryNode.find(category => {
             if(category.id == vehicle.category)
             {
                 category.addLength(1);
-            } 
-            else
-            {
-                gCategoryNode.push(
-                    new Category(
-                        vehicle.category,
-                        eVehicleClassLabel[vehicle.category],
-                        1,
-                    )
-                )
+                haveCategory = true
             }
         });
 
+        if (! haveCategory )
+        {
+            gCategoryNode.push( new Category(
+                vehicle.category,
+                eVehicleClassLabel[vehicle.category],
+                1,
+            ) );
+        }
     });
-});
+
+    gCategoryNode.sort((a, b) => a.id - b.id);
+}
 
 onNet("showroom:client:enableUi", () => {
     SetNuiFocus(true, true);
