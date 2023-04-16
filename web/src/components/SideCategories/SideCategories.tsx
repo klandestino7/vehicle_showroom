@@ -1,8 +1,8 @@
 import { eVehicleClass } from "@/constants/eClasses";
 import s from "./SideCategories.module.scss";
-import { categoriesMock } from "@/constants/categories";
 import { useContext } from "react";
 import { useMainPageCtx } from "@/contexts/MainPageCtx";
+import { CategoryType, useAppContext } from "@/contexts/AppContext";
 
 
 
@@ -28,15 +28,16 @@ const Item = ({id, label, number} : ItemProps) => {
 
 const SideCategories = () => 
 {
+    const { categories } = useAppContext();
 
     return (
         <div className={s.sideCategories}>
             {
-                categoriesMock.map(item => (
+                categories.map((item: CategoryType) => (
                     <Item
                         id={item.id}
                         label={item.label}
-                        number={item.vehiclesAmount}
+                        number={item.length}
                     />
                 ))
             }

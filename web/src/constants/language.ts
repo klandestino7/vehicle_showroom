@@ -10,14 +10,15 @@ LOCALES["en"] =
     ["special_offers"] : "SPECIAL OFFERS",
     ["hot"] : "HOT",
     ["all_categories"] : "ALL CATEGORIES",
+    ["cheapest_first"] : "CHEAPEST FIRST",
 }
 
 export const lang = (string: string) => 
 {
-    const localeLib = LOCALES[LANGUAGE]
+    const localeLib = LOCALES[LANGUAGE];
     if ( ! localeLib )
     {
-        return console.log("LANGUAGE NOT FOUND!");
+        return console.log("ERROR: LANGUAGE NOT FOUND!");
     }
 
     if ( ! localeLib[string] )

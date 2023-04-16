@@ -5,6 +5,7 @@ import './index.css'
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { HashRouter } from 'react-router-dom';
+import { AppContextProvider } from './contexts/AppContext';
 
 const queryClient = new QueryClient();
 
@@ -12,7 +13,9 @@ ReactDOM.render(
     <React.StrictMode>
         <HashRouter>
             <QueryClientProvider client={queryClient}>
-                <AppShowroom />
+                <AppContextProvider>
+                    <AppShowroom />
+                </AppContextProvider>
             </QueryClientProvider>
         </HashRouter>
     </React.StrictMode>,

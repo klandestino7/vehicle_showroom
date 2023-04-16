@@ -15,12 +15,15 @@ import BackgroundBars from "./components/BackgroundBars/BackgroundBars";
 import { VehicleSelectedCtxProvider } from "./contexts/VehicleSelectedCtx";
 import ShowroomManagement from "./pages/Management/Showroom/Showroom";
 import { IsEnvBrowser } from "./constants/IsEnvBrowser";
+import { useAppContext } from "./contexts/AppContext";
 
 const AppShowroom = () => {
     const [displayUi, setDisplayUi] = useState<boolean>(IsEnvBrowser ? true : false);
     const [backgroundDisplay, setBackgroundDisplay] = useState<boolean>(true);
 
     const [ currentLocation, setCurrentLocation ] = useState("dsds");
+
+    const { setVehiclesNode, setCategoriesNode } = useAppContext();
 
     const currentPath = useLocation();
 
@@ -47,11 +50,21 @@ const AppShowroom = () => {
         setBackgroundDisplay(data);
     });
 
+    useNUIMessage<any>('AppShowroom/UpdateVehicleNode', (data) =>
+    {
+        setVehiclesNode(data);
+    });
+
+    useNUIMessage<any>('AppShowroom/UpdateCategoryNode', (data) =>
+    {
+        setCategoriesNode(data);
+    });
+
     return (
         <VehicleSelectedCtxProvider>
             <div className={`${s.root} ${ displayUi ? s.active : '' }`} 
                 style={{
-                    background: currentLocation == "/" ? backgroundDisplay ? `url("./images/symbols.svg")` : "" : `url("./images/symbols.svg")`
+                    background: currentLocation == "/" ? backgroundDisplay ? `url("./images/symbols.svg")` : `url("./images/main-bg.png")` : `url("./images/symbols.svg")`
                 }}
             >
                 <BackgroundBars />

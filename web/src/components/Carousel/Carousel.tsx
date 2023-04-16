@@ -2,24 +2,27 @@ import { useMainPageCtx } from "@/contexts/MainPageCtx";
 import s from "./Carousel.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { eVehicleClass, eVehicleClassLabel } from "@/constants/eClasses";
-import { categoriesMock } from "@/constants/categories";
-import { vehiclesMock } from "@/constants/vehicles";
 import VehicleCard, { VehicleCardProps } from "../VehicleCard/VehicleCard";
+import { lang } from "@/constants/language";
+import { CategoryType, VehicleType, useAppContext } from "@/contexts/AppContext";
 
 type VehiclesProps = {
     currentClass: eVehicleClass;
 }
 
 const Vehicles: React.FC<VehiclesProps> = ({ currentClass }) => {
+    
+    const { vehicles } = useAppContext();
+
     const generateVehicleArray = (): VehicleCardProps[] => {
         if (currentClass == eVehicleClass.all) {
-            return vehiclesMock;
+            return vehicles;
         }
 
-        let array: VehicleCardProps[] = [];
+        const array: VehicleCardProps[] = [];
 
-        vehiclesMock.map(vehicle => {
-            if (vehicle.class == currentClass) {
+        vehicles.map((vehicle : VehicleType) => {
+            if (vehicle.category == currentClass) {
                 array.push(vehicle);
             }
         })
@@ -41,15 +44,16 @@ const Vehicles: React.FC<VehiclesProps> = ({ currentClass }) => {
 const Carousel = () => {
     const ref = useRef(null);
     const { currentCategory } = useMainPageCtx();
+    const { categories } = useAppContext();
     const [categoryLabel, setCategoryLabel] = useState<string>("");
     const [vehicles, setVehicles] = useState<number>(0);
 
     const getVehicleAmountFromCategory = () => {
         let amount = 0
 
-        categoriesMock.map(item => {
+        categories.map((item : CategoryType) => {
             if (item.id == currentCategory)
-                amount = item.vehiclesAmount;
+                amount = item.length;
         })
 
         return amount
@@ -85,7 +89,7 @@ const Carousel = () => {
 
                 <div className={s.sortButton}>
                     <img src={"./icons/sort.svg"} alt={"cheapest first"} />
-                    <span>CHEAPEST FIRST</span>
+                    <span>{lang("cheapest_first")}</span>
                 </div>
             </div>
 

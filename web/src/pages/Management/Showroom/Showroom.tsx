@@ -4,15 +4,16 @@ import s from "./Showroom.module.scss";
 import Header from "@/components/Header/Header";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import VehicleCard from "@/components/VehicleCard/VehicleCard";
-import { categoriesMock } from "@/constants/categories";
-import { vehiclesMock } from "@/constants/vehicles";
 import { Input, InputCheckbox } from "@/components/Input/Input";
+import { CategoryType, VehicleType, useAppContext } from "@/contexts/AppContext";
 
 type ShowroomManagementProps = {
 
 }
 
 const VehiclesContainer = () => {
+
+    const { categories, vehicles } = useAppContext();
 
     return (
 
@@ -21,7 +22,7 @@ const VehiclesContainer = () => {
                 <h3>AVAILABLE CARS</h3>
                 <div className={s.categoryFilter}>
                     {
-                        categoriesMock.map(category => <FilterCategory
+                        categories.map((category : CategoryType) => <FilterCategory
                             id = {category.id}
                             label = {category.label}
                         />)
@@ -31,7 +32,7 @@ const VehiclesContainer = () => {
 
             <div className={s.vehiclesContainer}>
                 {
-                    vehiclesMock.map(vehicle => 
+                    vehicles.map((vehicle : VehicleType) => 
                     {
                         return <VehicleCard 
                             {...vehicle}

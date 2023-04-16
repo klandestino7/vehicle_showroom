@@ -10,17 +10,23 @@ export type VehicleCardProps = {
     model: string;
     brand: string;
 
-    price: number;
-    priceOffer?: number;
-
-    class: eVehicleClass;
-
+    category: eVehicleClass;
     image: string;
 
-    maxSpeed: number;
-    acceleration: number;
-    braking: number;
-    handling: number;
+    minPrice: number;
+    maxPrice: number;
+    basePrice: number;
+    offerPrice?: number;
+
+    maxSpeed?: number;
+    acceleration?: number;
+    braking?: number;
+    handling?: number;
+
+    stock: number;
+    availableColors: number[];
+
+    enabled: boolean;
 
     showVehicleStatus?: boolean;
 }
@@ -30,13 +36,13 @@ const VehicleCard : React.FC<VehicleCardProps> = ({
     label, 
     model, 
     brand, 
-    price, 
-    priceOffer,
+    basePrice, 
+    offerPrice,
     image, 
-    maxSpeed, 
-    acceleration, 
-    braking, 
-    handling,
+    maxSpeed = 0, 
+    acceleration = 0, 
+    braking = 0, 
+    handling = 0,
     showVehicleStatus = false
 }) => 
 {
@@ -66,16 +72,16 @@ const VehicleCard : React.FC<VehicleCardProps> = ({
                     {id}
                 </div>
 
-                <div className={`${s.price} ${ priceOffer ? s.offerPrice : s.normalPrice }`}>
+                <div className={`${s.price} ${ offerPrice ? s.offerPrice : s.normalPrice }`}>
                     {
-                        priceOffer 
+                        offerPrice 
                         ?
                             <>
-                                <span className={s.oldPrice}> ${USDollar.format(price)} </span>
-                                <span> ${USDollar.format(priceOffer)} </span>
+                                <span className={s.oldPrice}> ${USDollar.format(basePrice)} </span>
+                                <span> ${USDollar.format(offerPrice)} </span>
                             </>
                         :
-                            <span>${USDollar.format(price)} </span>
+                            <span>${USDollar.format(basePrice)} </span>
                     }
                 </div>
             </div>

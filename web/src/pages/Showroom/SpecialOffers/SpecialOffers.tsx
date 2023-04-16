@@ -5,8 +5,7 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import VehicleCard, { VehicleCardProps } from "@/components/VehicleCard/VehicleCard";
 import { eVehicleClass, eVehicleClassLabel } from "@/constants/eClasses";
 import FilterCategory from "@/components/FilterCategory/FilterCategory";
-import { categoriesMock } from "@/constants/categories";
-import { vehiclesMock } from "@/constants/vehicles";
+import { CategoryType, VehicleType, useAppContext } from "@/contexts/AppContext";
 
 type SpecialOffersProps = {
 
@@ -14,6 +13,8 @@ type SpecialOffersProps = {
 
 const SpecialOffers = () => 
 {
+    const { categories, vehicles } = useAppContext();
+
     return(
         <div className={s.specialOffers}>
             <Header 
@@ -23,7 +24,7 @@ const SpecialOffers = () =>
 
             <div className={s.categoryFilter}>
                 {
-                    categoriesMock.map(category => <FilterCategory
+                    categories.map((category : CategoryType) => <FilterCategory
                         id = {category.id}
                         label = {category.label}
                     />)
@@ -33,9 +34,9 @@ const SpecialOffers = () =>
             <div className={s.container}>
                 <div className={s.vehiclesContainer}>
                     {
-                        vehiclesMock.map(vehicle => 
+                        vehicles.map((vehicle : VehicleType) => 
                         {
-                            return vehicle.priceOffer && <VehicleCard 
+                            return vehicle.offerPrice && <VehicleCard 
                                 {...vehicle}
                                 showVehicleStatus={true}
                             />

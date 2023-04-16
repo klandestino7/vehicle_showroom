@@ -2,11 +2,12 @@ import { useVehicleSelectedCtx } from "@/contexts/VehicleSelectedCtx";
 import s from "./VehicleDetails.module.scss";
 import { useEffect, useState } from "react";
 import { VehicleCardProps } from "../VehicleCard/VehicleCard";
-import { vehiclesMock } from "@/constants/vehicles";
 import { VehicleColorsMock } from "@/constants/colors";
 import VehicleStatus from "../VehicleStatus/VehicleStatus";
 import { IsEnvBrowser } from "@/constants/IsEnvBrowser";
 import { lang } from "@/constants/language";
+import { useAppContext } from "@/contexts/AppContext";
+import { fetchApp } from "@/hooks/fetchApp";
 
 
 type ButtonsProps =
@@ -16,6 +17,8 @@ type ButtonsProps =
 
 const ButtonsContainer : React.FC<ButtonsProps> = ({vehicleInfo}) => {
     let USDollar = new Intl.NumberFormat('en-US');
+    const { currentVehicle } = useVehicleSelectedCtx();
+
     
     const getVehiclePrice = () : number => {
         let price = 0;
@@ -35,14 +38,22 @@ const ButtonsContainer : React.FC<ButtonsProps> = ({vehicleInfo}) => {
         return price
     }
 
+    const handleTestDrive = () => {
+        fetchApp("AppShowroom", "TEST_DRIVE", {vehicleId: currentVehicle});
+    }
+
+    const handleBuyVehicle = () => {
+        fetchApp("AppShowroom", "TRY_BUY_VEHICLE", {vehicleId: currentVehicle});
+    }
+
     return (
         <div className={s.buttonsContainer}>
-            <div className={s.testDrive}>
+            <div className={s.testDrive} onClick={() => handleTestDrive()}>
                 <span className={s.label}>{lang("test_drive")}</span>
                 <span className={s.price}>$159</span>
             </div>
 
-            <div className={s.buyButton}> 
+            <div className={s.buyButton} onClick={() => handleBuyVehicle()}> 
                 <span className={s.label}>{lang("buy_car")}</span>
                 <span className={s.price}>${USDollar.format(getVehiclePrice())}</span>
             </div>
@@ -82,11 +93,13 @@ const VehicleDetails = () =>
 {
     const { currentVehicle } = useVehicleSelectedCtx();
     const [ vehicleInfo, setVehicleInfo ] = useState<VehicleCardProps>();
+    
+    const { vehicles } = useAppContext();
 
     const [ vehiclePopup, setVehiclePopup ] = useState(currentVehicle != -1);
 
     useEffect(() => {
-        setVehicleInfo(vehiclesMock[currentVehicle - 1]);
+        setVehicleInfo(vehicles[currentVehicle - 1]);
         setVehiclePopup(currentVehicle != -1)
     }, [currentVehicle])
 
@@ -121,10 +134,10 @@ const VehicleDetails = () =>
                                 {vehicleInfo.label}
                             </h1>
                             <VehicleStatus
-                                maxSpeed={vehicleInfo.maxSpeed}
-                                acceleration={vehicleInfo.acceleration}
-                                braking={vehicleInfo.braking}
-                                handling={vehicleInfo.handling}
+                                maxSpeed={vehicleInfo.maxSpeed ?? 0}
+                                acceleration={vehicleInfo.acceleration ?? 0}
+                                braking={vehicleInfo.braking ?? 0}
+                                handling={vehicleInfo.handling ?? 0}
                             />
                             <div className={s.closePopup} onClick={() => setVehiclePopup(false)}>X</div>
 
