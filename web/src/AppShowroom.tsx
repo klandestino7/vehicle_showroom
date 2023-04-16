@@ -64,7 +64,8 @@ const AppShowroom = () => {
         <VehicleSelectedCtxProvider>
             <div className={`${s.root} ${ displayUi ? s.active : '' }`} 
                 style={{
-                    background: currentLocation == "/" ? backgroundDisplay ? `url("./images/symbols.svg")` : `url("./images/main-bg.png")` : `url("./images/symbols.svg")`
+                    background: currentLocation == "/" ? backgroundDisplay ? `url("./images/symbols.svg")` : `url("./images/main-bg.png")` : `url("./images/symbols.svg")`,
+                    backgroundSize: "cover"
                 }}
             >
                 <BackgroundBars />
