@@ -15,8 +15,8 @@ server_scripts {
     "dist/server.js"
 }
 
-fxdk_watch_command 'yarn' {'watch'}
-fxdk_build_command 'yarn' {'build'}
+-- fxdk_watch_command 'yarn' {'watch'}
+-- fxdk_build_command 'yarn' {'build'}
 
 ui_page "web/dist/index.html"
 
@@ -24,6 +24,7 @@ files {
     "web/dist/index.html",
     
     "web/dist/images/*.svg",
+    "web/dist/images/*.png",
     "web/dist/icons/*.svg",
     "web/dist/fonts/*.ttf",
     "web/dist/vehicles/*.png",
