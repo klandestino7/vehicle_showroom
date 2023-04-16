@@ -25,3 +25,5 @@ function onResourceStop(resource: string) {
 }
 
 on('onResourceStop', onResourceStop);
+
+setTimeout(() => emitNet("showroom:server:getVehicleListFromStore"), 1000);
