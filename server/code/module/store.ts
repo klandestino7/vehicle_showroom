@@ -2,7 +2,6 @@ import { eVehicleClass } from "data/eClasses";
 import { Vehicle, VehicleType } from "./vehicle";
 
 export class Store {
-    public VehiclesNode : Vehicle[];
 
     constructor(
         public readonly id : number,
@@ -22,7 +21,7 @@ export class Store {
 
     getVehicles()
     {
-        return this.VehiclesNode;
+        return this.vehicles;
     }
 
     getVehiclesByClass(category: eVehicleClass)
