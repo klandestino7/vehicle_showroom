@@ -3,6 +3,8 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import s from "./Header.module.scss";
 import { Navigate, redirect, useNavigate, useRoutes } from "react-router-dom";
 import { fetchApp } from "@/hooks/fetchApp";
+import { useAppContext } from "@/contexts/AppContext";
+import { IsEnvBrowser } from "@/constants/IsEnvBrowser";
 
 type HeaderProps = {
     // firstWord: string;
@@ -28,6 +30,8 @@ const ToolbarButton : React.FC<toolbarButtonProps> = ({label, icon, handle}) =>{
 const Toolbar = () => {
     const navigate = useNavigate();
 
+    const { groupPermission } = useAppContext();
+
     const closeAllPage = () =>{
         navigate("/");
         fetchApp('AppShowroom', 'CLOSE_INTERFACE');
@@ -39,11 +43,16 @@ const Toolbar = () => {
 
     return (
         <div className={s.toolbar}>
-            <ToolbarButton 
-                label = {"settings"}
-                icon = {"settings"}
-                handle = {() => openDashboardPage()}
-            />
+            {
+                ( groupPermission || IsEnvBrowser ) && (
+                    <ToolbarButton 
+                        label = {"settings"}
+                        icon = {"settings"}
+                        handle = {() => openDashboardPage()}
+                    />
+                )
+            }
+            
             <ToolbarButton
                 label = {"exit"}
                 icon = {"exit"}

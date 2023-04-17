@@ -1,6 +1,7 @@
 import { categoriesMock } from "@/constants/categories";
 import { eVehicleClass } from "@/constants/eClasses";
 import { vehiclesMock } from "@/constants/vehicles";
+import { useNUIMessage } from "@/utils/useNUIMessage";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Navigate, redirect } from "react-router-dom";
 
@@ -36,6 +37,7 @@ type AppContextType = {
     vehicles: VehicleType[];
     filteredVehicles: VehicleType[];
     filterWords: string;
+    groupPermission: boolean;
     setVehiclesNode: (categories: VehicleType[]) => void;
     setCategoriesNode: (vehicles: CategoryType[]) => void;
     setWords: (words: string) => void;
@@ -50,6 +52,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     const [ categories, setCategories ] = useState<CategoryType[]>(categoriesMock);
     const [ vehicles, setVehicles ] = useState<VehicleType[]>(vehiclesMock);
 
+    const [ groupPermission, setGroupPermission ] = useState<boolean>(false);
+
     const [ filteredVehicles, setFilteredVehicles ] = useState<VehicleType[]>(vehiclesMock);
     const [ filterWords, setFilterWords ] = useState<string>("");
 
@@ -63,9 +67,13 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 
     const setWords = (words: string) => {
         setFilterWords(words);
-
         setVehicleFilter();
     }
+
+    useNUIMessage<boolean>('AppShowroom/SetGroupPermission', (data) =>
+    {
+        setGroupPermission(data);
+    });
 
     const setVehicleFilter = () => {
 
@@ -86,12 +94,11 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
             setFilteredVehicles(filtered);
             return
         }
-
         setFilteredVehicles([]);
     }
 
     return (
-        <AppContext.Provider value={{ categories, vehicles, filteredVehicles, filterWords, setVehiclesNode, setCategoriesNode, setWords }}>
+        <AppContext.Provider value={{ categories, vehicles, filteredVehicles, filterWords, groupPermission,  setVehiclesNode, setCategoriesNode, setWords }}>
             {children}
         </AppContext.Provider>
     );

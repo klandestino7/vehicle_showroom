@@ -9,8 +9,9 @@ const SearchBar = () =>
 {
     const { setWords } = useAppContext();
 
-    const handleChange = (event) => {
-        setWords(event.target.value);
+    const handleChange = (event: React.SyntheticEvent<EventTarget>) => {
+        const result = (event.target as HTMLInputElement).value;
+        setWords(result);
     }
 
     return(

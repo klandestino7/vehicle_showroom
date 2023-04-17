@@ -43,6 +43,7 @@ const AppShowroom = () => {
     useNUIMessage<boolean>('AppShowroom/DisplayNUI', (data) =>
     {
         setDisplayUi(data);
+        setBackgroundDisplay(true);
     });
 
     useNUIMessage<boolean>('AppShowroom/DisableBackground', (data) =>

@@ -1,3 +1,4 @@
+import { lang } from "@/constants/language";
 import s from "./Input.module.scss";
 
 type InputProps = 
@@ -7,6 +8,9 @@ type InputProps =
     type: string;
     prefix: string;
     placeholder: string;
+    minValue?: number;
+    maxValue?: number;
+    handleChange: (event: any) => void;
 }
 
 export const Input : React.FC<InputProps> = ({
@@ -14,12 +18,27 @@ export const Input : React.FC<InputProps> = ({
     label,
     type,
     prefix,
-    placeholder
+    placeholder,
+    minValue,
+    maxValue,
+    handleChange
 }) => {
 
     return (
         <div className={s.input}>
-            <span>{label}</span>
+            <span>
+                {label}
+                {
+                    maxValue && minValue 
+                    ?
+                        <span className={s.small}>
+                            <span>{lang("min_value")} {prefix}{minValue}</span>
+                            <span>{lang("max_value")} {prefix}{maxValue}</span>
+                        </span>
+                    :
+                    ""
+                }
+            </span>
             <label>
                 {prefix}
 
@@ -28,6 +47,9 @@ export const Input : React.FC<InputProps> = ({
                     type={type}
                     id={id}
                     placeholder={placeholder}
+                    min={minValue}
+                    max={maxValue}
+                    onChange={handleChange}
                 />
             </label>
         </div>
@@ -40,25 +62,26 @@ type InputCheckboxProps =
     id: string;
     label: string;
     state: boolean;
+    handleChange: (event: any) => void;
 }
 
 export const InputCheckbox : React.FC<InputCheckboxProps> = ({
     id,
     label,
-    state
+    state,
+    handleChange,
 }) =>
 {
 
     return (
         <div className={s.inputCheckbox}>
             <label className={s.switch}>
-                <input id={id} type="checkbox" defaultChecked={state}/>
+                <input id={id} type="checkbox"  defaultChecked={state} onChange={handleChange}/>
                 <div className={`${s.slider} ${s.round}`}>
                     <img src={"./icons/checked.svg"} alt="" />
                 </div>
             </label>
 
-            
             <span className={s.label}>
                 {label}
             </span>

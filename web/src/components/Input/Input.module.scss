@@ -23,6 +23,15 @@
 
     span {
         padding-block: 1vh;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        opacity: .8;
+
+        & > span{
+            padding-block: 0;
+            margin: 0 1vh;
+        }
     }
 
     input {
@@ -34,6 +43,17 @@
         color: white;
         font-family: var(--primary-font);
         font-size: 3vh;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    
+    .small
+    {
+        font-size: 2vh;
     }
 }
 
@@ -86,7 +106,10 @@
             display: none;
             width: 15px;
             transform: translateX(0px) !important;
-            transition: all 2s ease-in-out !important;
+        }
+
+        > * {
+            transition: 120ms transform ease-in-out;
         }
     }
 
@@ -108,6 +131,7 @@
 
     input:checked+.slider:before {
         background-color: var(--red);
+
     }
 
     input:focus+.slider {
@@ -125,6 +149,8 @@
         -ms-transform: translateX(26px);
         transform: translateX(26px);
         display: block;
+
+        
     }
 
     // /* Rounded sliders */

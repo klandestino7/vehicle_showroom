@@ -17,7 +17,7 @@ export const CategoryCtxProvider = ({ children }: { children: React.ReactNode })
 
 
     const setCategory = (category: eVehicleClass) =>{
-        setCurrentCategory(category)
+        setCurrentCategory(category);
     }
 
     return (

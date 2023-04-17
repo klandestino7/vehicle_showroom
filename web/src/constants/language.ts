@@ -11,6 +11,9 @@ LOCALES["en"] =
     ["hot"] : "HOT",
     ["all_categories"] : "ALL CATEGORIES",
     ["cheapest_first"] : "CHEAPEST FIRST",
+    ["min_value"] : "MIN",
+    ["max_value"] : "MAX",
+    ["save"] : "SAVE"
 }
 
 export const lang = (string: string) => 

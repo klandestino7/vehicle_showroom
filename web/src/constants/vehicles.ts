@@ -185,7 +185,7 @@ export const vehiclesMock : VehicleCardProps[] =
     },
     {
         id: 10,
-        label: "Carro 2000",
+        label: "Blista",
         model: "blista",
         brand: "Vapid",
         category: eVehicleClass.sedans,

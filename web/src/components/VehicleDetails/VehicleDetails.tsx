@@ -19,9 +19,8 @@ type ButtonsProps =
 
 const ButtonsContainer : React.FC<ButtonsProps> = ({vehicle}) => {
     let USDollar = new Intl.NumberFormat('en-US');
-    const { currentVehicle } = useVehicleSelectedCtx();
+    const { currentVehicleData } = useVehicleSelectedCtx();
 
-    
     const getVehiclePrice = () : number => {
         let price = 0;
 
@@ -41,11 +40,11 @@ const ButtonsContainer : React.FC<ButtonsProps> = ({vehicle}) => {
     }
 
     const handleTestDrive = () => {
-        fetchApp("AppShowroom", "TEST_DRIVE", {vehicleId: currentVehicle});
+        fetchApp("AppShowroom", "TEST_DRIVE_REQUEST", {vehicleId: currentVehicleData.id});
     }
 
     const handleBuyVehicle = () => {
-        fetchApp("AppShowroom", "TRY_BUY_VEHICLE", {vehicleId: currentVehicle});
+        fetchApp("AppShowroom", "TRY_BUY_VEHICLE", {vehicleId: currentVehicleData.id});
     }
 
     return (
