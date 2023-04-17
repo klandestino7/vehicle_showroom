@@ -46,7 +46,6 @@ export const VehicleSelectedCtxProvider = ({ children }: { children: React.React
 
     useNUIMessage<any>('AppShowroom/SendVehiclePerformance', (data) =>
     {
-        console.log(JSON.stringify(data));
         setVehiclePerformance(data);
     });
 
@@ -66,6 +65,7 @@ export const VehicleSelectedCtxProvider = ({ children }: { children: React.React
 
     const requestSaveNewData = () =>
     {
+        console.log(JSON.stringify(currentVehicleData));
         fetchApp("AppShowroom", "UPDATE_VEHICLE_DATA", {currentVehicle, currentVehicleData});
     }
 

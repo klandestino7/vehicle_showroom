@@ -47,6 +47,7 @@ export const Input : React.FC<InputProps> = ({
                     type={type}
                     id={id}
                     placeholder={placeholder}
+                    defaultValue={placeholder}
                     min={minValue}
                     max={maxValue}
                     onChange={handleChange}

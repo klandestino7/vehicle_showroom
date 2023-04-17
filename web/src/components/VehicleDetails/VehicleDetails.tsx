@@ -66,24 +66,33 @@ const ButtonsContainer : React.FC<ButtonsProps> = ({vehicle}) => {
 const ColorPicker = () => {
     const { setVehicleColor } = useVehicleSelectedCtx();
 
-    return (
+    const { currentVehicleData } = useVehicleSelectedCtx();
+
+    useEffect(() => {
+
+    }, [currentVehicleData]);
+
+    return currentVehicleData && (
         <div className={s.colorPicker}>
             <span>Colors</span>
             <div className={s.contentColors}>
-                
                 {
-                    VehicleColorsMock.map(color =>{
-                        return (
-                            <div 
-                                className={s.colorItem}
-                                data-tooltip={color.label}
-                                style={{background: color.hash}}
-                                onClick={() => setVehicleColor(color.index)}
-                            >
-                                
-                            </div>
-                        )
-                    })
+                    currentVehicleData.availableColors ? 
+                        currentVehicleData.availableColors.map((colorId: number) => {
+                            const color = VehicleColorsMock[colorId]
+                            return (
+                                <div 
+                                    className={s.colorItem}
+                                    data-tooltip={color.label}
+                                    style={{background: color.hash}}
+                                    onClick={() => setVehicleColor(color.index)}
+                                >
+                                    
+                                </div>
+                            )
+                        })
+                    :
+                        <h2>No colors available</h2>
                 }
             </div>
         </div>

@@ -15,7 +15,6 @@ export const CategoryCtxProvider = ({ children }: { children: React.ReactNode })
 
     const [ currentCategory, setCurrentCategory ] = useState<eVehicleClass>(-1);
 
-
     const setCategory = (category: eVehicleClass) =>{
         setCurrentCategory(category);
     }

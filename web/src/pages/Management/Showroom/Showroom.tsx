@@ -28,7 +28,7 @@ const VehiclesContainer = () => {
 
         <div className={s.vehicles}>
             <div className={s.header}>
-                <h3>AVAILABLE CARS</h3>
+                <h3>{lang("available_cars")}</h3>
                 <div className={s.categoryFilter}>
                     {
                         categories.map((category : CategoryType) => category.length >= 1 && <FilterCategory
@@ -59,20 +59,20 @@ const Button = () => {
 
 
 const Colors = () => {
-    const { setVehicleColor } = useVehicleSelectedCtx();
-
-    const { vehicles } = useAppContext();
-    const { currentVehicle } = useVehicleSelectedCtx();
+    const { registerNewData, currentVehicleData } = useVehicleSelectedCtx();
 
     const [ colors, setColors ] = useState<number[]>([]);
 
     useEffect(() =>{
-        if (vehicles[currentVehicle])
-            setColors(vehicles[currentVehicle].availableColors);
-    }, [currentVehicle])
+        if (currentVehicleData)
+        {
+            setColors(currentVehicleData.availableColors);
+        }
+    }, [currentVehicleData])
 
     const removeColor = (color: number) => 
     {
+        // console.log("removeColor :: ", color, JSON.stringify(colors));
         const arr : number[] = colors;
 
         arr.map((c, index) => {
@@ -84,23 +84,27 @@ const Colors = () => {
 
         setColors(arr);
 
-        fetchApp("AppShowroom", "UPDATE_AVAILABLE_COLOR", {currentVehicle, colors})
+        registerNewData("availableColors", arr);
+        fetchApp("AppShowroom", "UPDATE_AVAILABLE_COLOR", colors)
     }
 
     const addColor = (color: number) => 
     {
+        // console.log("addColor :: ", color, JSON.stringify(colors));
+        
         const arr : number[] = colors;
         arr.push(color);
 
         setColors(arr);
+        registerNewData("availableColors", arr);
 
-        fetchApp("AppShowroom", "UPDATE_AVAILABLE_COLOR", {currentVehicle, colors});
+        fetchApp("AppShowroom", "UPDATE_AVAILABLE_COLOR", colors);
     }
 
     const handleChange = (event: React.SyntheticEvent<EventTarget>, colorId: number) => {
         const status = (event.target as HTMLInputElement).checked;
 
-        if ( status )
+        if ( !status )
         {
             removeColor(colorId);
         }
@@ -110,54 +114,94 @@ const Colors = () => {
         }
     }
 
-    return (
+    return currentVehicleData ? (
         <div className={s.colorPicker}>
             <div className={s.contentColors}>
-                
                 {
-                    VehicleColorsMock.map(color =>{
-                        return (
+                    VehicleColorsMock.map(color => {
 
-                                <input
-                                    className={s.colorItem}
-                                    data-tooltip={color.label}
-                                    style={{background: color.hash}}
-                                    onChange={(event) => handleChange(event, color.index)}
-                                    type="checkbox"
-                                />
+                        const isChecked : any = colors?.find((colorId) => {
+                            return colorId == color.index
+                        })
+
+                        return (
+                            <Color
+                                label={color.label}
+                                hash={color.hash}
+                                handle={(e) => handleChange(e, color.index)}
+                                isChecked={isChecked}
+                            />
                         )
                     })
                 }
             </div>
         </div>
+    ) : <></>
+}
+
+type ColorProps = {
+    label: string;
+    hash: string;
+    isChecked: boolean;
+    handle: (e: any) => void;
+}
+
+const Color : React.FC<ColorProps> = ({
+    label,
+    isChecked,
+    hash,
+    handle,
+}) => {
+
+    const [ checked, setChecked ] = useState(isChecked);
+
+    const handleChange = () => {
+        setChecked(!checked);
+    }
+
+    useEffect(() => {
+        setChecked(isChecked);
+    })
+
+    return (
+        <input
+            className={s.colorItem}
+            data-tooltip={label}
+            style={{background: hash}}
+            onChange={(e) => handle(e)}
+            onClick={handleChange}
+            defaultChecked={checked}
+            type="checkbox"
+        />
     )
 }
 
 
 const SidebarManager = () => {
-    const { vehicles } = useAppContext();
-    const { currentVehicle, registerNewData } = useVehicleSelectedCtx();
+    const { currentVehicleData, registerNewData } = useVehicleSelectedCtx();
 
     const [ vehicle, setVehicle ] = useState<VehicleType>();
 
-    const handleOnChange = (key: string, value: number | string) =>
+    const handleOnChange = (key: string, event: React.SyntheticEvent<EventTarget>) =>
     {
+        const value = (event.target as HTMLInputElement).value;
         registerNewData(key, value);
     }
 
     useEffect(() =>{
-        setVehicle(vehicles[currentVehicle]);
-    }, [currentVehicle])
+        setVehicle(currentVehicleData);
+        // console.log("currentVehicleData", currentVehicleData);
+    }, [currentVehicleData])
 
-    return (
+    return vehicle ? (
         <div className={s.sidebarManager}>
             <Input
-                id={"name"}
+                id={"label"}
                 label={"Name car"}
                 type={"text"}
                 prefix={""}
-                placeholder={vehicle?.label ?? "no name"}
-                handleChange={(event: any) => handleOnChange("name", event)}
+                placeholder={currentVehicleData.label}
+                handleChange={(event: any) => handleOnChange("label", event)}
             />
 
             <Input
@@ -165,7 +209,7 @@ const SidebarManager = () => {
                 label={"MODEL"}
                 type={"text"}
                 prefix={"#"}
-                placeholder={vehicle?.model ?? "no model"}
+                placeholder={currentVehicleData.model}
                 handleChange={(event: any) => handleOnChange("model", event)}
             />
 
@@ -180,7 +224,7 @@ const SidebarManager = () => {
                 <InputCheckbox
                     id={"specialoffer"}
                     label={"Special Offer"}
-                    state={vehicle?.offerPrice ? true : false}
+                    state={currentVehicleData.offerPrice ? true : false}
                     handleChange={(event: any) => handleOnChange("offerPriceBoolean", event)}
                 />
             </div>
@@ -191,8 +235,8 @@ const SidebarManager = () => {
                 type={"number"}
                 prefix={"$"}
                 placeholder={"8 000"}
-                minValue={vehicle?.minPrice}
-                maxValue={vehicle?.maxPrice}
+                minValue={currentVehicleData.minPrice}
+                maxValue={currentVehicleData.maxPrice}
                 handleChange={(event: any) => handleOnChange("offerPrice", event)}
             />
 
@@ -200,7 +244,7 @@ const SidebarManager = () => {
 
             <Button />
         </div>
-    )
+    ) : <></>
 }
 
 const ShowroomManagement = () => 

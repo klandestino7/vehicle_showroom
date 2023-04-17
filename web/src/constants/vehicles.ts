@@ -17,7 +17,7 @@ export const vehiclesMock : VehicleCardProps[] =
         offerPrice: 18000,
 
         stock: 5,
-        availableColors: [],
+        availableColors: [2, 3, 4],
         enabled: true,
         
         maxSpeed: 232,

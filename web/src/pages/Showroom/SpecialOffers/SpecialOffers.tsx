@@ -21,7 +21,7 @@ const SpecialOffers = () =>
     return(
         <CategoryCtxProvider>
             <div className={s.specialOffers}>
-                <Header 
+                <Header
                     title={""}
                     enableNavBar={true}
                 />

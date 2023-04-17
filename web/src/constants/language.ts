@@ -13,7 +13,8 @@ LOCALES["en"] =
     ["cheapest_first"] : "CHEAPEST FIRST",
     ["min_value"] : "MIN",
     ["max_value"] : "MAX",
-    ["save"] : "SAVE"
+    ["save"] : "SAVE",
+    ["available_cars"]: "AVAILABLE CARS"
 }
 
 export const lang = (string: string) => 
