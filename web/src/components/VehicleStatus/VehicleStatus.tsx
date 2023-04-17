@@ -19,7 +19,7 @@ const StatusBadge : React.FC<StatusBadge> = ({label, icon, value}) =>
         
             <div className={s.right}>
                 <div className={s.number}>
-                    {value}
+                    {value.toFixed(1)}
                 </div>
 
                 <div className={s.label}>

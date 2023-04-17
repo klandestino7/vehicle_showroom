@@ -84,7 +84,7 @@ onNet("showroom:client:successBoughtVehicle", (netId: number) =>{
     QBCore.Functions.Notify(`YOUR CAR IS OUTSIDE, PLATEE ${plate}`);
 });
 
-uiAppOn("AppShowroom/SELECT_VEHICLE", (data: any) => {
+uiAppOn("AppShowroom/SELECT_VEHICLE", async (data: any) => {
     const vehicle = data.body.vehicle;
 
     gUiApp.emit('AppShowroom/DisableBackground', false);
@@ -94,16 +94,24 @@ uiAppOn("AppShowroom/SELECT_VEHICLE", (data: any) => {
 
     destroyEntity();
 
+    // setManagedTick(() => HasModelLoaded(vehicle.model), 5000);
+
     currentVehicle = new Vehicle(vehicle.model, position, rotation);
 
-    setManagedTick(() => HasModelLoaded(vehicle.model), 5000);
+    await setManagedTick( () => !DoesEntityExist(currentVehicle.getEntity()), 2000);
+
+    const vehEntity = currentVehicle.getEntity();
 
     if ( !gOrbitalCamPreviewIsEnabled )
     {
         setTimeout(() => {
-            startPreviewUsingOrbitalCam(currentVehicle.getEntity());
+            startPreviewUsingOrbitalCam(vehEntity);
         }, 300)
     }
+
+    const score = global.exports[GetCurrentResourceName()].getVehiclePerformance(vehEntity);
+
+    gUiApp.emit("AppShowroom/SendVehiclePerformance", score);
 });
 
 uiAppOn("AppShowroom/UPDATE_COLOR", (data: any) => {

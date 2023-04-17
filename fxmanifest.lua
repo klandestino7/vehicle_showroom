@@ -7,6 +7,7 @@ client_scripts {
     "lua-lib/orbitalcam/camera.lua",
     "lua-lib/orbitalcam/controllable_orbitalcam.lua",
     "lua-lib/orbitalcam/orbitalcam.lua",
+    "lua-lib/performance/perf.lua",
 
     "dist/client.js"
 } 

@@ -5,7 +5,7 @@ export const startPreviewUsingOrbitalCam = async (entity: number) =>
     if ( gOrbitalCamPreviewIsEnabled ) { return; }
 
     gOrbitalCamPreviewIsEnabled = true
-    global.exports.vehicle_showroom.startPreviewUsingOrbitalCam(entity)
+    global.exports[GetCurrentResourceName()].startPreviewUsingOrbitalCam(entity)
 }
 
 export const stopPreviewUsingOrbitalCam = () => 
@@ -13,6 +13,6 @@ export const stopPreviewUsingOrbitalCam = () =>
     if ( gOrbitalCamPreviewIsEnabled ) 
     {
         gOrbitalCamPreviewIsEnabled = false;
-        global.exports.vehicle_showroom.stopPreviewUsingOrbitalCam()
+        global.exports[GetCurrentResourceName()].stopPreviewUsingOrbitalCam()
     }
 }

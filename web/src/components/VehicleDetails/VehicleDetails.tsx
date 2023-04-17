@@ -92,8 +92,15 @@ const ColorPicker = () => {
 
 const VehicleDetails = () => 
 {
-    const { currentVehicle } = useVehicleSelectedCtx();
+    const { currentVehicle, vehiclePerformance } = useVehicleSelectedCtx();
     const [ vehicleNode, setVehicleNode ] = useState<VehicleCardProps>();
+
+    const [ perf, setPerf ] = useState({
+        speed:0,
+        accel: 0,
+        braking: 0,
+        handling: 0,
+    });
     
     const { vehicles } = useAppContext();
 
@@ -102,7 +109,12 @@ const VehicleDetails = () =>
     useEffect(() => {
         setVehicleNode(vehicles[currentVehicle - 1]);
         setVehiclePopup(currentVehicle != -1)
-    }, [currentVehicle])
+
+        if ( vehiclePerformance )
+        {
+            setPerf(vehiclePerformance)
+        }
+    }, [currentVehicle, vehiclePerformance])
 
     const openVehiclePopup = (event: any) => {
 
@@ -135,10 +147,10 @@ const VehicleDetails = () =>
                                 {vehicleNode.label}
                             </h1>
                             <VehicleStatus
-                                maxSpeed={vehicleNode.maxSpeed ?? 0}
-                                acceleration={vehicleNode.acceleration ?? 0}
-                                braking={vehicleNode.braking ?? 0}
-                                handling={vehicleNode.handling ?? 0}
+                                maxSpeed={perf?.speed ?? 0}
+                                acceleration={perf?.accel ?? 0}
+                                braking={perf?.braking ?? 0}
+                                handling={perf?.handling ?? 0}
                             />
                             <div className={s.closePopup} onClick={() => setVehiclePopup(false)}>X</div>
 
