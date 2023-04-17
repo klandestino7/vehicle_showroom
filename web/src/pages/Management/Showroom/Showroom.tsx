@@ -3,9 +3,13 @@ import s from "./Showroom.module.scss";
 
 import Header from "@/components/Header/Header";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import VehicleCard from "@/components/VehicleCard/VehicleCard";
+import VehicleCard, { VehicleCardProps } from "@/components/VehicleCard/VehicleCard";
 import { Input, InputCheckbox } from "@/components/Input/Input";
 import { CategoryType, VehicleType, useAppContext } from "@/contexts/AppContext";
+import { useCategoryCtx } from "@/contexts/CategoryCtx";
+import { useEffect, useState } from "react";
+import { eVehicleClass } from "@/constants/eClasses";
+import Vehicles from "@/components/VehicleCardContainer/VehicleCardContainer";
 
 type ShowroomManagementProps = {
 
@@ -13,7 +17,7 @@ type ShowroomManagementProps = {
 
 const VehiclesContainer = () => {
 
-    const { categories, vehicles } = useAppContext();
+    const { categories } = useAppContext();
 
     return (
 
@@ -22,7 +26,7 @@ const VehiclesContainer = () => {
                 <h3>AVAILABLE CARS</h3>
                 <div className={s.categoryFilter}>
                     {
-                        categories.map((category : CategoryType) => <FilterCategory
+                        categories.map((category : CategoryType) => category.length >= 1 && <FilterCategory
                             id = {category.id}
                             label = {category.label}
                         />)
@@ -31,14 +35,7 @@ const VehiclesContainer = () => {
             </div>
 
             <div className={s.vehiclesContainer}>
-                {
-                    vehicles.map((vehicle : VehicleType) => 
-                    {
-                        return <VehicleCard 
-                            {...vehicle}
-                        />
-                    })
-                }
+                <Vehicles />
             </div>
         </div>
         

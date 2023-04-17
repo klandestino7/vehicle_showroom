@@ -1,49 +1,16 @@
-import { useMainPageCtx } from "@/contexts/MainPageCtx";
+import { useCategoryCtx } from "@/contexts/CategoryCtx";
 import s from "./Carousel.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { eVehicleClass, eVehicleClassLabel } from "@/constants/eClasses";
 import VehicleCard, { VehicleCardProps } from "../VehicleCard/VehicleCard";
 import { lang } from "@/constants/language";
 import { CategoryType, VehicleType, useAppContext } from "@/contexts/AppContext";
-
-type VehiclesProps = {
-    currentClass: eVehicleClass;
-}
-
-const Vehicles: React.FC<VehiclesProps> = ({ currentClass }) => {
-    
-    const { vehicles } = useAppContext();
-
-    const generateVehicleArray = (): VehicleCardProps[] => {
-        if (currentClass == eVehicleClass.all) {
-            return vehicles;
-        }
-
-        const array: VehicleCardProps[] = [];
-
-        vehicles.map((vehicle : VehicleType) => {
-            if (vehicle.category == currentClass) {
-                array.push(vehicle);
-            }
-        })
-
-        return array;
-    }
-
-    return (
-        <>
-            {generateVehicleArray().map(item => <VehicleCard
-                {...item}
-                showVehicleStatus={false}
-            />)}
-        </>
-    )
-}
+import Vehicles from "../VehicleCardContainer/VehicleCardContainer";
 
 
 const Carousel = () => {
     const ref = useRef(null);
-    const { currentCategory } = useMainPageCtx();
+    const { currentCategory } = useCategoryCtx();
     const { categories } = useAppContext();
     const [categoryLabel, setCategoryLabel] = useState<string>("");
     const [vehicles, setVehicles] = useState<number>(0);
@@ -78,6 +45,7 @@ const Carousel = () => {
     }, []);
 
     useEffect(() => {
+        console.log("currentCategory", currentCategory)
         setCategoryLabel(eVehicleClassLabel[currentCategory]);
         setVehicles(getVehicleAmountFromCategory())
     }, [currentCategory]);
@@ -95,7 +63,7 @@ const Carousel = () => {
 
             <div className={s.container} ref={ref}>
                 <div className={s.carouselGrid}>
-                    <Vehicles currentClass={currentCategory} />
+                    <Vehicles />
                 </div>
             </div>
         </div>

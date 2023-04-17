@@ -4,7 +4,7 @@ import s from "./MainPage.module.scss";
 import Header from "@/components/Header/Header";
 import SideCategories from "@/components/SideCategories/SideCategories";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import { MainPageCtxProvider } from "@/contexts/MainPageCtx";
+import { CategoryCtxProvider } from "@/contexts/CategoryCtx";
 import VehicleDetails from "@/components/VehicleDetails/VehicleDetails";
 type MainPageProps = {
 
@@ -13,7 +13,7 @@ type MainPageProps = {
 const MainPage = () => 
 {
     return(
-        <MainPageCtxProvider>
+        <CategoryCtxProvider>
             <div className={s.mainPage}>
                 <Header 
                     title={""}
@@ -34,7 +34,7 @@ const MainPage = () =>
                     </div>
                 </div>
             </div>
-        </MainPageCtxProvider>
+        </CategoryCtxProvider>
     )
 }
 

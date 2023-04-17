@@ -1,7 +1,7 @@
 import { eVehicleClass } from "@/constants/eClasses";
 import s from "./SideCategories.module.scss";
 import { useContext } from "react";
-import { useMainPageCtx } from "@/contexts/MainPageCtx";
+import { useCategoryCtx } from "@/contexts/CategoryCtx";
 import { CategoryType, useAppContext } from "@/contexts/AppContext";
 
 
@@ -13,7 +13,7 @@ type ItemProps = {
 }
 
 const Item = ({id, label, number} : ItemProps) => {
-    const { currentCategory, setCategory } = useMainPageCtx();
+    const { currentCategory, setCategory } = useCategoryCtx();
 
     return (
         <div className={`${s.item} ${id == currentCategory ? s.selected : "" }`} onClick={() => setCategory(id)}>

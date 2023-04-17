@@ -32,10 +32,13 @@ export type VehicleType =
 }
 
 type AppContextType = {
-    categories: any;
-    vehicles: any;
-    setVehiclesNode: (categories: any) => void;
-    setCategoriesNode: (vehicles: any) => void;
+    categories: CategoryType[];
+    vehicles: VehicleType[];
+    filteredVehicles: VehicleType[];
+    filterWords: string;
+    setVehiclesNode: (categories: VehicleType[]) => void;
+    setCategoriesNode: (vehicles: CategoryType[]) => void;
+    setWords: (words: string) => void;
 }   
 
 export const AppContext = createContext({} as AppContextType);
@@ -47,16 +50,48 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     const [ categories, setCategories ] = useState<CategoryType[]>(categoriesMock);
     const [ vehicles, setVehicles ] = useState<VehicleType[]>(vehiclesMock);
 
-    const setVehiclesNode = (vehicles: any) =>{
-        setVehicles(vehicles)
+    const [ filteredVehicles, setFilteredVehicles ] = useState<VehicleType[]>(vehiclesMock);
+    const [ filterWords, setFilterWords ] = useState<string>("");
+
+    const setVehiclesNode = (vehicles: VehicleType[]) => {
+        setVehicles(vehicles);
     }
 
-    const setCategoriesNode = (categories: any) =>{
-        setCategories(categories)
+    const setCategoriesNode = (categories: CategoryType[]) => {
+        setCategories(categories);
+    }
+
+    const setWords = (words: string) => {
+        setFilterWords(words);
+
+        setVehicleFilter();
+    }
+
+    const setVehicleFilter = () => {
+
+        if (filterWords && filterWords != "" && filterWords != " ")
+        {
+            const filtered = vehicles.filter(vehicle => 
+                {
+                    return Object.values(vehicle).some( (value : any) => {
+                        let compute = typeof value === "string" ? value.includes(filterWords) : false;
+                        if ( compute )
+                        {
+                            return compute;
+                        }
+                    })
+                }
+            );
+
+            setFilteredVehicles(filtered);
+            return
+        }
+
+        setFilteredVehicles([]);
     }
 
     return (
-        <AppContext.Provider value={{ categories, vehicles, setVehiclesNode, setCategoriesNode }}>
+        <AppContext.Provider value={{ categories, vehicles, filteredVehicles, filterWords, setVehiclesNode, setCategoriesNode, setWords }}>
             {children}
         </AppContext.Provider>
     );

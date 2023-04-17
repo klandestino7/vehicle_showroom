@@ -6,6 +6,9 @@ import VehicleCard, { VehicleCardProps } from "@/components/VehicleCard/VehicleC
 import { eVehicleClass, eVehicleClassLabel } from "@/constants/eClasses";
 import FilterCategory from "@/components/FilterCategory/FilterCategory";
 import { CategoryType, VehicleType, useAppContext } from "@/contexts/AppContext";
+import { useEffect, useState } from "react";
+import { CategoryCtxProvider, useCategoryCtx } from "@/contexts/CategoryCtx";
+import Vehicles from "@/components/VehicleCardContainer/VehicleCardContainer";
 
 type SpecialOffersProps = {
 
@@ -13,38 +16,34 @@ type SpecialOffersProps = {
 
 const SpecialOffers = () => 
 {
-    const { categories, vehicles } = useAppContext();
+    const { categories } = useAppContext();
 
     return(
-        <div className={s.specialOffers}>
-            <Header 
-                title={""}
-                enableNavBar={true}
-            />
+        <CategoryCtxProvider>
+            <div className={s.specialOffers}>
+                <Header 
+                    title={""}
+                    enableNavBar={true}
+                />
 
-            <div className={s.categoryFilter}>
-                {
-                    categories.map((category : CategoryType) => <FilterCategory
-                        id = {category.id}
-                        label = {category.label}
-                    />)
-                }
-            </div>
-
-            <div className={s.container}>
-                <div className={s.vehiclesContainer}>
+                <div className={s.categoryFilter}>
                     {
-                        vehicles.map((vehicle : VehicleType) => 
-                        {
-                            return vehicle.offerPrice && <VehicleCard 
-                                {...vehicle}
-                                showVehicleStatus={true}
-                            />
-                        })
+                        categories.map((category : CategoryType) => category.length >=1 && <FilterCategory
+                            id = {category.id}
+                            label = {category.label}
+                        />)
                     }
                 </div>
+
+                <div className={s.container}>
+                    <div className={s.vehiclesContainer}>
+                        <Vehicles
+                            showVehicleStatus={true}
+                        />
+                    </div>
+                </div>
             </div>
-        </div>
+        </CategoryCtxProvider>
     )
 }
 
