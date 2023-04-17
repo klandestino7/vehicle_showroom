@@ -112,7 +112,11 @@ export class Vehicle {
     setColor(primaryColor: number, secondaryColor: number = 1)
     {
         if (!this.entity) { return }
+
         SetVehicleColours(this.entity, primaryColor, secondaryColor);
+
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
     }
     setPlate(plate: string)
     {
@@ -124,5 +128,11 @@ export class Vehicle {
     getEntity()
     {
         return this.entity;
+    }
+
+    setFreeze(status: boolean)
+    {
+        FreezeEntityPosition(this.entity, status)
+        this.isFreezed = status;
     }
 }
