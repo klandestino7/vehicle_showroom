@@ -21,12 +21,19 @@ onNet("showroom:client:getVehicleList", (vehiclesNode: any) => {
 });
 
 onNet("showroom:client:sendVehicleNode", (vehicleNode: any) => {
+    console.log("showroom:client:sendVehicleNode ::");
+
     gVehicleNode.map((vehicle, index) => {
         if( vehicle.id == vehicleNode.id )
         {
             gVehicleNode[index] = vehicleNode;
         }
     })
+
+    if ( gUiApp.gShowroomInterfaceStatus )
+    {
+        gUiApp.emit("AppShowroom/UpdateVehicleNode", gVehicleNode);
+    }
 });
 
 const formatCategoryNodeToInterface = () =>
@@ -76,7 +83,6 @@ onNet("showroom:client:enableUi", () => {
 onNet("showroom:client:successBoughtVehicle", (netId: number) =>{
     const entity = NetworkGetEntityFromNetworkId(netId);
     
-    console.log("vehicle", entity);
     const plate = GetVehicleNumberPlateText(entity);
 
     destroyInterfaceAndData();
