@@ -109,4 +109,18 @@ export class Vehicle
     {
         this.stock = number;
     }
+
+    updateData(data: VehicleType)
+    {
+        this.label = data.label;
+        this.model = data.model;
+        this.brand = data.brand;
+    
+        this.basePrice = data.basePrice;
+        this.offerPrice = data.offerPrice;
+    
+        this.availableColors = data.availableColors;
+    
+        this.enabled = data.enabled;
+    }
 }

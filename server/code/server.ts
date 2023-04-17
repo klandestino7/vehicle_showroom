@@ -15,16 +15,16 @@ const store = new Store(
 store.init(() => {
     const vehiclesFormated : Vehicle[] = store.registerVehiclesFromNode(VehiclesMock);
 
-    store.setVehicles(vehiclesFormated)
-});
+    store.setVehicles(vehiclesFormated);
 
+    console.log("STORE DATA INITIALIZED");
+});
 
 onNet('showroom:server:getVehicleListFromStore', () => {
     const _source = (global as any).source;
 
     emitNet("showroom:client:getVehicleList", _source, store.getVehicles())
 });
-
 
 onNet("showroom:server:tryBuyVehicle", (vehicleId: number, primaryColor: number, secondaryColor: number) => {
     const personaId = (global as any).source; // put citizen Id from qbcore;
@@ -37,11 +37,36 @@ onNet("showroom:server:tryBuyVehicle", (vehicleId: number, primaryColor: number,
     {
         const spawnCoords = VEHICLE_SPAWN_POSITION_WHEN_BUY[randomInt(0, 5)];
 
-        const entity = CreateVehicle(GetHashKey(vehicle.model), spawnCoords.x, spawnCoords.y, spawnCoords.z, spawnCoords.h, true, false);
-        const netId = NetworkGetNetworkIdFromEntity(entity)
+        const entity = CreateVehicle(GetHashKey(vehicle.model), spawnCoords.x, spawnCoords.y, spawnCoords.z, spawnCoords.h, true, false)
 
-        SetVehicleColours(entity, primaryColor, secondaryColor);
-
-        emitNet("showroom:client:successBoughtVehicle", personaId, netId);
+        const tickWait = setTick(() =>{
+            if (DoesEntityExist(entity))
+            {
+                emitNet("showroom:client:successBoughtVehicle", personaId, NetworkGetNetworkIdFromEntity(entity));
+                SetVehicleColours(entity, primaryColor, secondaryColor);
+                clearTick(tickWait);
+            }
+        })
+        
     }
+})
+
+onNet("showroom:server:updateVehicleColors", (vehicleId: number, colors: number[]) => {
+    const vehicle = store.getVehicleFromId(vehicleId);
+
+    if ( vehicle )
+    {
+        vehicle.setAvailableColors(colors);
+    }
+})
+
+onNet("showroom:server:updateVehicleData", (vehicleId: number, data: VehicleType) => {
+    const vehicle = store.getVehicleFromId(vehicleId);
+
+    if ( vehicle )
+    {
+        vehicle.updateData(data);
+    }
+
+    store.resendVehicleToClient(vehicleId);
 })

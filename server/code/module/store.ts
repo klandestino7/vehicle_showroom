@@ -91,4 +91,10 @@ export class Store {
     {
         console.log(`[${this.name}] ${type} :: ${message}`);
     }
+
+    resendVehicleToClient(vehicleId: number)
+    {
+        const vehicle = this.getVehicleFromId(vehicleId);
+        emitNet("showroom:client:sendVehicleNode", -1, vehicle);
+    }
 }
